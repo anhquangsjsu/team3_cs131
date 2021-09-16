@@ -456,3 +456,185 @@ Flashcards in the folders or topics that users just create
 ###### **Alternate Trigger**
 
 ###### **Alternate Postconditions**
+##### **Use Case Name: Add lock to a note**
+
+###### **Summary**
+
+The user adds a passcode to the specified note
+
+###### **Actors**
+
+User
+
+###### **Preconditions**
+
+A Note needs to exist and be selected
+
+###### **Trigger**
+
+User clicks the &quot;add lock&quot; button
+
+###### **Primary Sequence**
+
+1. System asks the user to input their desired passcode
+2. User inputs their passcode
+3. System asks the user to reinput the passcode
+4. User inputs their passcode
+5. System displays a message confirming the note is now locked
+
+###### **Primary Postcondition**
+
+There is a passcode attached to the note specified by the user
+
+###### **Alternate Trigger**
+
+User attempts to change the passcode of an already locked note
+
+###### **Alternate Sequences**
+
+2. System prompts the user to enter the original passcode
+
+3. User enters a passcode
+
+4. If user enters the correct passcode, the Primary sequence is followed.
+
+4 a. If user doesn&#39;t enter correct passcode, System displays a error message &quot;wrong passcode&quot;
+
+##### **Use Case Name: Convert markdown note to pdf**
+
+###### **Summary**
+
+Converts a note into a pdf
+
+###### **Actors**
+
+User
+
+###### **Preconditions**
+
+Note needs to exist and be selected
+
+###### **Trigger**
+
+User presses the convert to pdf button
+
+###### **Primary Sequence**
+
+1. System prompts the user to specify the destination for their new pdf file
+2. User enters the destination
+3. System asks the user to confirm/finalize the conversion
+4. User accepts the conversion
+5. System displays a confirmation message
+
+###### **Primary Postcondition**
+
+A pdf file of the note specified is created in the destination specified by the user
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Add a new empty note**
+
+###### **Summary**
+
+User creates a new empty note
+
+###### **Actors**
+
+User
+
+###### **Preconditions**
+
+App is running and at default screen
+
+###### **Trigger**
+
+User clicks the &quot;new note&quot; button
+
+###### **Primary Sequence**
+
+1. System creates a new note titled &quot;New Note&quot; (default name)
+2. System pulls the user into the new note
+
+###### **Primary Postcondition**
+
+A new note is created
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Share a note**
+
+###### **Summary**
+
+User shares a note to someone
+
+###### **Actors**
+
+User
+
+###### **Preconditions**
+
+A note exists and the user is in a note
+
+###### **Trigger**
+
+User presses the &quot;share note&quot; button
+
+###### **Primary Sequence**
+
+1. System prompts the user to enter the information of the account they want to share the note to
+2. User enters the other accounts information
+3. System prompts the user for confirmation with a message &quot;send note to (account)?&quot;
+4. User confirms
+
+###### **Primary Postcondition**
+
+The other user is able to access the shared note
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Search words/phrases in notes**
+
+###### **Summary**
+
+Allows the user to search for words/phrases in all notes
+
+###### **Actors**
+
+User
+
+###### **Preconditions**
+
+Notes exist
+
+###### **Trigger**
+
+User types into the note search bar
+
+###### **Primary Sequence**
+
+1. User types into the search bar their desired words/phrases
+2. System lists the notes that contain the words/phrases, listed by date created (or edited?)
+
+- Can change based off if the user deletes or adds new words/phrases
+
+###### **Primary Postcondition**
+
+A visual list is formed and presented to the user
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
