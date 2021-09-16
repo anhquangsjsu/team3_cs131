@@ -283,3 +283,176 @@ b. User select &quot;Confirm&quot;
 4 System update the task with new durations but same name
 
 5 The task remain the same as before
+##### **Use Case Name: import files and convert to flashcards**
+
+###### **Summary**
+
+User can import their files and convert to flashcards
+
+###### **Actors**
+
+User
+
+###### **Preconditions**
+
+Users need to select the file
+
+###### **Trigger**
+
+User click on the &quot;Convert&quot; button
+
+###### **Primary Sequence**
+
+1. Systems prompt the user to specify the destination for their flashcards file
+2. User enters the destination
+3. Systems ask the user to confirm the conversion
+4. User accepts the conversion
+5. System displays the confirmation message
+
+###### **Primary Postcondition**
+
+The flashcards file is created in the destination by the user
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Share flashcard**
+
+**Summary**
+
+Share flashcards
+
+###### **Actors**
+
+Users
+
+###### **Preconditions**
+
+The user needs to have account to share with others account
+
+###### **Trigger**
+
+User select &quot;Share&quot; button
+
+###### **Primary Sequence**
+
+1. System prompt the user to specify the flashcards
+2. The user chooses the flashcards
+3. The system displays a list of accounts to be shared
+4. The user chose the account
+5. System ask user to confirm or cancel
+6. User chose to confirm
+7. System notifies the flashcards have shared to the chosen account
+
+###### **Primary Postcondition**
+
+The chosen account now possessed a new flashcard
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Create pdf or flashcards to print**
+
+**Summary**
+
+User use the pdf or flashcards in their application to print
+
+###### **Actors**
+
+Users
+
+###### **Preconditions**
+
+The user must have the pdf or flashcards file to print
+
+###### **Primary Sequence**
+
+1. The system prompts the user to specify the destination for their pdf or flashcards
+2. User enters the destination
+3. Systems ask the user to choose the printer
+4. Users choose the printer
+5. The system displays a confirmation message
+
+###### **Primary Postcondition**
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Sort flashcards by name alphabetic**
+
+**Summary**
+
+Users can sort flashcards by name
+
+###### **Actors**
+
+Users
+
+###### **Preconditions**
+
+Multiple flashcards must be created
+
+**Trigger**
+
+User click &quot;Sort by&quot; button
+
+###### **Primary Sequence**
+
+1. System prompts user to choose the flashcards that they have
+2. User choose &quot;Sort by&quot;
+3. The system displays a list of flashcards in order alphabetically
+
+###### **Primary Postcondition**
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
+
+##### **Use Case Name: Organize flashcards into topics/sections**
+
+**Summary**
+
+Users can organize their flashcards into topics or sections
+
+###### **Actors**
+
+Users
+
+###### **Preconditions**
+
+Users need multiple flashcards
+
+**Trigger**
+
+The user creates the topics or sections
+
+###### **Primary Sequence**
+
+1. Systems prompt user to create the topics or sections folder
+2. User click new option, new folder
+3. Systems ask the name of topics or folders
+4. User input name of the topics or section folders
+5. User confirm the name of the topics or section folders
+6. System check name of topics for name&#39;s availability and potential conflict
+7. System confirm the name
+
+###### **Primary Postcondition**
+
+Flashcards in the folders or topics that users just create
+
+###### **Alternate Sequences**
+
+###### **Alternate Trigger**
+
+###### **Alternate Postconditions**
