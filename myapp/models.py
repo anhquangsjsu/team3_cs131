@@ -22,6 +22,14 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.id}: {self.username}>'
 
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128), unique=True)
+    note = db.Column(db.String(256))
+    finished = db.Column(db.Boolean)
+    remained_time = db.Column(db.Integer) #seconds
+    date_started = db.Column(db.Date)
+    date_ended = db.Column(db.Date)
 """
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
