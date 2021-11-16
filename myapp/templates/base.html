@@ -14,12 +14,26 @@
             <a href="/flashcard">Flash card</a>
             <a href="/timer">Todotimer</a>
         </nav>
+        {% if username %}
         <div>
-            <a href="/login">Login</a>
+            <b>Hello {{username}}</b>
+            <a href="/logout">Logout</a>
         </div>
+        {% endif %}
     </div>
-   
     {% block content %}
     {% endblock %}
+<script>
+    let start_timer_btn = document.getElementById("start_timer");
+    let timer_text = document.getElementById("time_text");
+    start_timer_btn.addEventListener("click",function(){
+        let text = timer_text.innerText;
+        
+    setInterval(function(){
+            text -= 1;
+            timer_text.innerText = text;
+        }, 1000) 
+    })
+</script>
 </body>
 </html>

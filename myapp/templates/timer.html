@@ -1,4 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>My todotimer</h2>
+<h2>My pomodoro timer</h2>
+<div>
+    <div id="timer_display">
+        Timer: <span id="time_text">{{timerRemain}}</span>
+    </div>
+    <form method='post' action="" novalidate>
+        {{ start_timer.hidden_tag() }}
+        <p>{{start_timer.start_timer()}}</p>
+    </form>
+    <form method='post' action="" novalidate>
+        {{ stop_timer.hidden_tag() }}
+        <p>{{stop_timer.stop_timer()}}</p>
+    </form>
+    <form method='post' action="" novalidate>
+        {{ reset_timer.hidden_tag() }}
+        <p>{{reset_timer.reset_timer()}}</p>
+    </form>
+    <div>
+        <h5>Current task: {{current_task.title}}</h5>
+        <a href="/finish_task/{{current_task.id}}">Finish current task</a>
+    </div>
+</div>
+<div>
+    {% if tasks %}
+        {% for t in tasks %}
+        <div>{{t.title}} <a href='/edit_task/{{t.id}}'>Edit</a> <a href="/delete_task/{{t.id}}">Delete</a></div>
+        {% endfor %}
+    {% else %}
+    <p>No tasks added yet</p>
+    {% endif %}
+    
+    {% if adding %}
+    <form method='post' novalidate>
+        {{add_task_form.hidden_tag()}}
+            <p>{{add_task_form.title.label}}: {{add_task_form.title()}}</p>
+            <p>{{add_task_form.note.label}}: {{add_task_form.note()}}</p>
+            <p>{{add_task_form.add_task()}} {{cancel_add.cancel()}}</p>
+        </form>
+    {% else %}
+    <form method='post' novalidate>
+    {{change_to_add.hidden_tag()}}
+        <p>{{change_to_add.submit()}}</p>
+    </form>
+    {% endif %}
+</div>
 {% endblock %}
