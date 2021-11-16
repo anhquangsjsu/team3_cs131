@@ -14,6 +14,10 @@ class TimerForm(FlaskForm):
     stop_timer = SubmitField('Stop timer')
     reset_timer = SubmitField('Reset timer')
 
+class ChangeTimerForm(FlaskForm):
+    task_timer = SubmitField('Task timer')
+    break_timer = SubmitField('Break timer')
+
 class AddTaskForm(FlaskForm):
     title = StringField('Task title', validators=[DataRequired()])
     note = StringField('Note')
@@ -22,6 +26,12 @@ class AddTaskForm(FlaskForm):
 
 class ChangeToTaskAddForm(FlaskForm):
     submit = SubmitField('Add new task')
+
+class EditTaskForm(FlaskForm):
+    confirm = SubmitField('Confirm change')
+    cancel = SubmitField('Cancel')
+    title = StringField('Task title')
+    note = StringField('Note')
 
 class SignUpForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

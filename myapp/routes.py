@@ -1,5 +1,5 @@
 from myapp import myapp_obj
-from myapp.forms import LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import request, render_template, flash, redirect
 from datetime import date
 import time
@@ -8,17 +8,21 @@ from myapp.models import User, Task
 from flask_login import current_user, login_user, logout_user, login_required
 
 #global variables for the pomodoro timer
-maxTimer = 1800
+maxTime = 1800
+breakTime = 300
 timerStopped = False
-timerRemain = maxTimer
+timerRemain = maxTime
+timerLeft = maxTime
+timerType = 'task timer'
+editTaskID = 999999999
 adding = False #flag to toggle the add task form when click "Add task"
-
+editing = False
 #helper functions
 def refreshTimerPage():
     return redirect('/timer')
 
 class Timer():
-        def __init__(self, m = maxTimer):
+        def __init__(self, m):
             self.max = m
         '''
         the functions will start the timer and countdown every 1 second
@@ -40,6 +44,11 @@ class Timer():
         def stop(self):
             global timerStopped
             timerStopped = True
+
+        def change_time(self, time):
+            global timerRemain
+            self.max = time
+            timerRemain = time
             
 ###Login logout features
 @myapp_obj.route("/loggedin")
@@ -80,7 +89,7 @@ def signup():
             if user is None:
                 user = User.query.filter_by(email=form.email.data).first()
                 if user is None: #check if email is used
-                    u = User(username = form.username.data, email = form.email.data)
+                    u = User(username = form.username.data, email = form.email.data, task_timer = maxTime, break_timer = breakTime)
                     u.set_password(form.password.data)
                     db.session.add(u)
                     db.session.commit()
@@ -113,18 +122,34 @@ def flashcard():
 #podomorotimer features
 @myapp_obj.route("/timer", methods=["GET", "POST"])
 def timer():
+    #forms
     timer_form = TimerForm()
     add_task_form = AddTaskForm()
+    timer_change_form = ChangeTimerForm()
+    edit_task_form = EditTaskForm()
     #to toggle the add task form when clicking "Add task"
     change_to_add = ChangeToTaskAddForm()
-    timer = Timer(maxTimer)
+    #global variables usage declartion
     global timerStopped 
     global adding
+    global timerType
+    global editing
+    global editTaskID
     u =  User.query.filter_by(username = current_user.username).first()
     tasks = u.tasks.filter_by(finished = False)
     current_task = tasks.first()
     #more code about the timer are put here, this is Quang's section
+    #check if user have the timer time set
+    if not u.task_timer:
+       u.start_timer = maxTime
+       u.break_imter = breakTime
+       db.session.commit() 
     #timer control form action and functions
+    if timerType == 'task timer':
+        timer = Timer(u.task_timer)
+    else:
+        timer = Timer(u.break_timer)
+
     if timer_form.validate_on_submit():
         if timer_form.start_timer.data:
             timer.start()   
@@ -134,6 +159,14 @@ def timer():
         elif timer_form.reset_timer.data:
             timer.reset()
             refreshTimerPage()
+    #change timer form action
+    if timer_change_form.validate_on_submit():
+        if timer_change_form.task_timer.data:
+            timerType = 'task timer'
+            timer.change_time(u.task_timer)
+        elif timer_change_form.break_timer.data:
+            timerType = 'break timer'
+            timer.change_time(u.break_timer)
     #add task controller
     if change_to_add.validate_on_submit() and change_to_add.submit.data:
         adding = True
@@ -157,20 +190,44 @@ def timer():
             add_task_form.title = ''
             add_task_form.note = ''
             return redirect('/timer')
-
+    #edit task functions
+    if edit_task_form.validate_on_submit():
+        if edit_task_form.confirm.data:
+            u =  User.query.filter_by(username = current_user.username).first()
+            if u != None:
+                task = u.tasks.filter_by(id = editTaskID).first()
+                if edit_task_form.title.data != '':
+                    task.title = edit_task_form.title.data
+                task.note = edit_task_form.note.data
+                db.session.commit()
+                editing = False
+                editTaskID = 99999999
+        elif edit_task_form.cancel.data:
+            editing = False
+            editTaskID = 99999999
+            return redirect('/timer')
     return render_template("timer.html", 
                             timer = timer, 
                             timer_form = timer_form,
                             timerRemain = timerRemain,
                             add_task_form = add_task_form,
                             change_to_add = change_to_add,
+                            edit_task_form = edit_task_form,
                             adding = adding,
                             tasks = tasks,
                             current_task = current_task,
+                            timer_type = timerType.capitalize(),
+                            timer_change_form = timer_change_form,
+                            editing = editing,
+                            editid = editTaskID    
                              )
 
 @myapp_obj.route("/edit_task/<string:taskid>")
 def edit_task(taskid):
+    global editing
+    global editTaskID
+    editing = True
+    editTaskID = int(taskid)
     return redirect('/timer')
 
 @myapp_obj.route("/delete_task/<string:taskid>")
@@ -178,13 +235,13 @@ def delete_task(taskid):
     Task.query.filter_by(id= taskid).delete()
     db.session.commit()
     u =  User.query.filter_by(username = current_user.username).first()
-    tasks = u.tasks.all()
     return redirect('/timer')
 
 @myapp_obj.route("/finish_task/<string:taskid>")
 def finish_task(taskid):
     t = Task.query.filter_by(id = taskid).first()
     t.finished = True
+    t.date_ended = date.today()
     db.session.commit()
     return redirect('/timer')
 

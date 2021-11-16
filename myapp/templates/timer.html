@@ -2,8 +2,15 @@
 {% block content %}
 <h2>My pomodoro timer</h2>
 <div>
+    <div id='timer_changer'>
+        <form method='POST' novalidate>
+            {{timer_change_form.hidden_tag()}}
+            <p>Change timer to {{timer_change_form.task_timer()}} {{timer_change_form.break_timer()}}</p>
+        </form>
+    </div>
+    <hr>
     <div id="timer_display">
-        Timer: <span id="time_text">{{timerRemain}}</span>
+        {{timer_type}}: <span id="time_text">{{timerRemain}}</span>
     </div>
     <form method='post' action="" novalidate>
         {{ timer_form.hidden_tag() }}
@@ -14,11 +21,28 @@
         <a href="/finish_task/{{current_task.id}}">Finish current task</a>
     </div>
 </div>
+<hr>
 <div>
     {% if tasks %}
         <h4>Task lists:</h4>
         {% for t in tasks %}
-        <div>{{t.title}} <a href='/edit_task/{{t.id}}'>Edit</a> <a href="/delete_task/{{t.id}}">Delete</a></div>
+            <div>
+                <span title='{{t.note}}' class='task_title'>{{t.id}}. {{t.title}}</span> 
+            
+            {% if (t.id == editid) and (editing == True) %}
+            <form method='POST' novalidate>
+                {{edit_task_form.hidden_tag()}}
+                <p>{{edit_task_form.title.label}} {{edit_task_form.title()}}</p>
+                <p>{{edit_task_form.note.label}} {{edit_task_form.note()}}</p>
+                <p>{{edit_task_form.confirm()}} {{edit_task_form.cancel()}}</p>
+            </form>
+            {% else %}
+            <div class='control_task_group'>
+                <a href='/edit_task/{{t.id}}'>Edit</a> <a href="/delete_task/{{t.id}}">Delete</a>
+            </div>    
+            {% endif %}
+            </div>
+
         {% endfor %}
     {% else %}
     <p>No tasks added yet</p>
