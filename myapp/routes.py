@@ -13,11 +13,11 @@ timerRemain = maxTimer
 adding = False
 def refresh():
     return redirect("/timer")
+
 class Timer():
         def __init__(self, m = maxTimer):
             self.max = m
         def start(self):
-            print("started")
             global timerStopped
             global timerRemain
             if timerRemain == 0 :
@@ -63,7 +63,7 @@ def login():
 @myapp_obj.route("/notes")
 def notes():
     #more code about notes are put here, this section is for Kim
-    return render_template("notes.html") #expect the notes.html will be render when user navigate to /notes
+    return render_template("notes.html") #expect the notes.htm  l will be render when user navigate to /notes
 
 @myapp_obj.route("/flashcard")
 def flashcard():
@@ -72,7 +72,6 @@ def flashcard():
 
 @myapp_obj.route("/timer", methods=["GET", "POST"])
 def timer():
-    
     #timer forms
     stop_timer = StopTimerForm()
     start_timer = StartTimerForm()
@@ -84,6 +83,9 @@ def timer():
     timer = Timer(maxTimer)
     global timerStopped 
     global adding
+    u =  User.query.filter_by(username = current_user.username).first()
+    tasks = u.tasks.filter_by(finished = False)
+    current_task = tasks.first()
     #more code about the timer are put here, this is Quang's section
     #timer control functions
     if start_timer.validate_on_submit() and start_timer.start_timer.data:
@@ -100,15 +102,19 @@ def timer():
         refresh()
     if cancel_add.validate_on_submit() and cancel_add.cancel.data:
         adding= False
-        refresh
+        refresh()
     if add_task_form.validate_on_submit() and add_task_form.add_task.data:
         adding= False
         t = Task(title = add_task_form.title.data,
                  note = add_task_form.note.data,
                  finished = False,
                  date_started = date.today())
-        print(t.date_started)
-        refresh()
+        u =  User.query.filter_by(username = current_user.username).first()
+        if u != None:
+            u.tasks.append(t)
+            db.session.add(t)
+            db.session.commit()
+            return redirect('/timer')
     return render_template("timer.html", 
                             timer = timer, 
                             stop_timer = stop_timer, 
@@ -118,8 +124,36 @@ def timer():
                             add_task_form = add_task_form,
                             change_to_add = change_to_add,
                             cancel_add = cancel_add,
-                            adding = adding )
+                            adding = adding,
+                            tasks = tasks,
+                            current_task = current_task,
+                             )
+
+@myapp_obj.route("/edit_task/<string:taskid>")
+def edit_task(taskid):
+    return redirect('/timer')
+
+@myapp_obj.route("/delete_task/<string:taskid>")
+def delete_task(taskid):
+    Task.query.filter_by(id= taskid).delete()
+    db.session.commit()
+    u =  User.query.filter_by(username = current_user.username).first()
+    tasks = u.tasks.all()
+    for t in tasks:
+        print(t.id)
+    return redirect('/timer')
+
+@myapp_obj.route("/finish_task/<string:taskid>")
+def finish_task(taskid):
+    t = Task.query.filter_by(id = taskid).first()
+    t.finished = True
+    db.session.commit()
+    return redirect('/timer')
 
 @myapp_obj.route("/")
 def home():
-    return render_template('home.html')
+    if current_user.is_authenticated:
+        print(current_user)
+        return render_template('home.html', username = current_user.username)
+    else: 
+        return redirect('/login')

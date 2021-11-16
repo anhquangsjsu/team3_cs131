@@ -7,10 +7,15 @@ from myapp import login
 
 
 class User(UserMixin, db.Model):
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
     email = db.Column(db.String(128), unique=True)
     password  = db.Column(db.String(128))
+    tasks = db.relationship('Task', 
+                            backref = 'user', 
+                            lazy = 'dynamic', 
+                            cascade = 'all, delete, delete-orphan' )
     #posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def set_password(self, password):
@@ -30,6 +35,15 @@ class Task(db.Model):
     remained_time = db.Column(db.Integer) #seconds
     date_started = db.Column(db.Date)
     date_ended = db.Column(db.Date)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+"""class FlaskCard(db.Model):
+    id =
+    title =
+    description =
+    date_added = 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+"""
 """
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

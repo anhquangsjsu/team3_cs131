@@ -14,11 +14,13 @@
             <a href="/flashcard">Flash card</a>
             <a href="/timer">Todotimer</a>
         </nav>
+        {% if username %}
         <div>
-            <a href="/login">Login</a>
+            <b>Hello {{username}}</b>
+            <a href="/logout">Logout</a>
         </div>
+        {% endif %}
     </div>
-   
     {% block content %}
     {% endblock %}
 <script>

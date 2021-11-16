@@ -17,11 +17,15 @@
         {{ reset_timer.hidden_tag() }}
         <p>{{reset_timer.reset_timer()}}</p>
     </form>
+    <div>
+        <h5>Current task: {{current_task.title}}</h5>
+        <a href="/finish_task/{{current_task.id}}">Finish current task</a>
+    </div>
 </div>
 <div>
     {% if tasks %}
         {% for t in tasks %}
-        <div>{{t.title}} <a href="#">Edit</a><a href="#">Delete</a></div>
+        <div>{{t.title}} <a href='/edit_task/{{t.id}}'>Edit</a> <a href="/delete_task/{{t.id}}">Delete</a></div>
         {% endfor %}
     {% else %}
     <p>No tasks added yet</p>
