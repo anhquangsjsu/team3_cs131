@@ -6,16 +6,8 @@
         Timer: <span id="time_text">{{timerRemain}}</span>
     </div>
     <form method='post' action="" novalidate>
-        {{ start_timer.hidden_tag() }}
-        <p>{{start_timer.start_timer()}}</p>
-    </form>
-    <form method='post' action="" novalidate>
-        {{ stop_timer.hidden_tag() }}
-        <p>{{stop_timer.stop_timer()}}</p>
-    </form>
-    <form method='post' action="" novalidate>
-        {{ reset_timer.hidden_tag() }}
-        <p>{{reset_timer.reset_timer()}}</p>
+        {{ timer_form.hidden_tag() }}
+        <p>{{timer_form.start_timer()}} {{timer_form.stop_timer()}} {{timer_form.reset_timer()}}</p>
     </form>
     <div>
         <h5>Current task: {{current_task.title}}</h5>
@@ -24,6 +16,7 @@
 </div>
 <div>
     {% if tasks %}
+        <h4>Task lists:</h4>
         {% for t in tasks %}
         <div>{{t.title}} <a href='/edit_task/{{t.id}}'>Edit</a> <a href="/delete_task/{{t.id}}">Delete</a></div>
         {% endfor %}
@@ -36,7 +29,7 @@
         {{add_task_form.hidden_tag()}}
             <p>{{add_task_form.title.label}}: {{add_task_form.title()}}</p>
             <p>{{add_task_form.note.label}}: {{add_task_form.note()}}</p>
-            <p>{{add_task_form.add_task()}} {{cancel_add.cancel()}}</p>
+            <p>{{add_task_form.add_task()}} {{add_task_form.cancel()}}</p>
         </form>
     {% else %}
     <form method='post' novalidate>

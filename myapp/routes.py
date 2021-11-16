@@ -1,22 +1,28 @@
 from myapp import myapp_obj
-from myapp.forms import CancelAddForm, LoginForm, StartTimerForm, StopTimerForm, ResetTimerForm, AddTaskForm, ChangeToTaskAddForm
+from myapp.forms import LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import request, render_template, flash, redirect
 from datetime import date
 import time
 from myapp import db
 from myapp.models import User, Task
 from flask_login import current_user, login_user, logout_user, login_required
+
 #global variables for the pomodoro timer
 maxTimer = 1800
 timerStopped = False
 timerRemain = maxTimer
-adding = False
-def refresh():
-    return redirect("/timer")
+adding = False #flag to toggle the add task form when click "Add task"
+
+#helper functions
+def refreshTimerPage():
+    return redirect('/timer')
 
 class Timer():
         def __init__(self, m = maxTimer):
             self.max = m
+        '''
+        the functions will start the timer and countdown every 1 second
+        '''
         def start(self):
             global timerStopped
             global timerRemain
@@ -24,19 +30,18 @@ class Timer():
                 timerRemain = self.max
             timerStopped = False
             while (not timerStopped and timerRemain > 0):
-                refresh()
                 timerRemain -= 1
-                print(timerRemain)
                 time.sleep(1) 
                 
         def reset(self):
             global timerRemain
             timerRemain = self.max
+
         def stop(self):
             global timerStopped
             timerStopped = True
             
-
+###Login logout features
 @myapp_obj.route("/loggedin")
 @login_required
 def log():
@@ -51,35 +56,67 @@ def logout():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash("Login invalid username or password")
-            return redirect('/login')
-        login_user(user, remember=form.remember_me.data)
-        flash(f'login requested for user {form.username.data}')
-        return redirect('/')
+        #if user click submit
+        if form.submit.data:
+            user = User.query.filter_by(username=form.username.data).first()
+            if user is None or not user.check_password(form.password.data):
+                flash("Login invalid username or password")
+                return redirect('/login')
+            login_user(user, remember=form.remember_me.data)
+            flash(f'login requested for user {form.username.data}')
+            return redirect('/')
+        #or user choose to sign up
+        elif form.signup.data:
+            return redirect('/signup')
     return render_template("login.html", form=form)
 
+@myapp_obj.route('/signup', methods=['GET','POST'])
+def signup():
+    form = SignUpForm()
+    if form.validate_on_submit():
+        if form.submit.data == True:
+            #check if the user is already there
+            user =  User.query.filter_by(username=form.username.data).first()
+            if user is None:
+                user = User.query.filter_by(email=form.email.data).first()
+                if user is None: #check if email is used
+                    u = User(username = form.username.data, email = form.email.data)
+                    u.set_password(form.password.data)
+                    db.session.add(u)
+                    db.session.commit()
+                    return redirect(f'/signedup/{form.username.data}')
+                else:
+                    flash('The email is already used')
+                    return redirect('/signup')
+            else:
+                flash('User already exists, please try a differen user')
+                return redirect('/signup')
+        elif form.login.data == True:
+            return redirect('/login')
+    return render_template('signup.html', form = form)
+
+@myapp_obj.route('/signedup/<string:user>', methods=['GET', 'POST'])
+def signedup(user):
+    return render_template('signedup.html',user = user)
+#Notes features
 @myapp_obj.route("/notes")
 def notes():
     #more code about notes are put here, this section is for Kim
     return render_template("notes.html") #expect the notes.htm  l will be render when user navigate to /notes
 
+#Flashcards features
 @myapp_obj.route("/flashcard")
 def flashcard():
     #more code about flashcard are put here, this section is for Jason
     return render_template("flashcard.html") #expect the flashcard.html will be render when user navigate to /notes
 
+#podomorotimer features
 @myapp_obj.route("/timer", methods=["GET", "POST"])
 def timer():
-    #timer forms
-    stop_timer = StopTimerForm()
-    start_timer = StartTimerForm()
-    reset_timer = ResetTimerForm()
-    #add task forms
+    timer_form = TimerForm()
     add_task_form = AddTaskForm()
+    #to toggle the add task form when clicking "Add task"
     change_to_add = ChangeToTaskAddForm()
-    cancel_add = CancelAddForm()
     timer = Timer(maxTimer)
     global timerStopped 
     global adding
@@ -87,43 +124,46 @@ def timer():
     tasks = u.tasks.filter_by(finished = False)
     current_task = tasks.first()
     #more code about the timer are put here, this is Quang's section
-    #timer control functions
-    if start_timer.validate_on_submit() and start_timer.start_timer.data:
-        timer.start()   
-    elif stop_timer.validate_on_submit() and stop_timer.stop_timer.data:
-        timer.stop()
-        refresh()
-    elif reset_timer.validate_on_submit() and reset_timer.reset_timer.data:
-        timer.reset()
-        refresh()
+    #timer control form action and functions
+    if timer_form.validate_on_submit():
+        if timer_form.start_timer.data:
+            timer.start()   
+        elif timer_form.stop_timer.data:
+            timer.stop()
+            refreshTimerPage()
+        elif timer_form.reset_timer.data:
+            timer.reset()
+            refreshTimerPage()
     #add task controller
     if change_to_add.validate_on_submit() and change_to_add.submit.data:
         adding = True
-        refresh()
-    if cancel_add.validate_on_submit() and cancel_add.cancel.data:
-        adding= False
-        refresh()
-    if add_task_form.validate_on_submit() and add_task_form.add_task.data:
-        adding= False
-        t = Task(title = add_task_form.title.data,
-                 note = add_task_form.note.data,
-                 finished = False,
-                 date_started = date.today())
-        u =  User.query.filter_by(username = current_user.username).first()
-        if u != None:
-            u.tasks.append(t)
-            db.session.add(t)
-            db.session.commit()
+        refreshTimerPage()
+
+    if add_task_form.validate_on_submit():
+        if add_task_form.add_task.data:
+            adding= False
+            t = Task(title = add_task_form.title.data,
+                    note = add_task_form.note.data,
+                    finished = False,
+                    date_started = date.today())
+            u =  User.query.filter_by(username = current_user.username).first()
+            if u != None:
+                u.tasks.append(t)
+                db.session.add(t)
+                db.session.commit()
+                return redirect('/timer')
+        elif add_task_form.cancel.data:
+            adding = False
+            add_task_form.title = ''
+            add_task_form.note = ''
             return redirect('/timer')
+
     return render_template("timer.html", 
                             timer = timer, 
-                            stop_timer = stop_timer, 
-                            start_timer = start_timer,
-                            reset_timer = reset_timer,
+                            timer_form = timer_form,
                             timerRemain = timerRemain,
                             add_task_form = add_task_form,
                             change_to_add = change_to_add,
-                            cancel_add = cancel_add,
                             adding = adding,
                             tasks = tasks,
                             current_task = current_task,
@@ -139,8 +179,6 @@ def delete_task(taskid):
     db.session.commit()
     u =  User.query.filter_by(username = current_user.username).first()
     tasks = u.tasks.all()
-    for t in tasks:
-        print(t.id)
     return redirect('/timer')
 
 @myapp_obj.route("/finish_task/<string:taskid>")
@@ -153,7 +191,6 @@ def finish_task(taskid):
 @myapp_obj.route("/")
 def home():
     if current_user.is_authenticated:
-        print(current_user)
         return render_template('home.html', username = current_user.username)
     else: 
         return redirect('/login')
