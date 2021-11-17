@@ -39,3 +39,9 @@ class SignUpForm(FlaskForm):
     email=StringField('Email')
     submit = SubmitField('Add me')
     login = SubmitField('Log in')
+
+class AddFlashcardForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description')
+    add = SubmitField ('Add')
+    cancel = SubmitField ('Cancel')

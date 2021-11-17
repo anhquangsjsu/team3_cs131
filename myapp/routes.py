@@ -1,10 +1,10 @@
 from myapp import myapp_obj
-from myapp.forms import EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import request, render_template, flash, redirect
 from datetime import date
 import time
 from myapp import db
-from myapp.models import User, Task
+from myapp.models import User, Task, Flashcard
 from flask_login import current_user, login_user, logout_user, login_required
 
 #global variables for the pomodoro timer
@@ -110,14 +110,29 @@ def signedup(user):
 #Notes features
 @myapp_obj.route("/notes")
 def notes():
-    #more code about notes are put here, this section is for Kim
+    #more code about notes are put here, this section is for Jason
     return render_template("notes.html") #expect the notes.htm  l will be render when user navigate to /notes
 
 #Flashcards features
-@myapp_obj.route("/flashcard")
+@myapp_obj.route("/flashcard", methods=["GET", "POST"])
 def flashcard():
-    #more code about flashcard are put here, this section is for Jason
-    return render_template("flashcard.html") #expect the flashcard.html will be render when user navigate to /notes
+    form = AddFlashcardForm()
+    u = User.query.filter_by(username = current_user.username).first() 
+    if u != None:
+        flashcards = u.flashcards.all()
+    if form.validate_on_submit():
+        if form.add.data:
+            if form.title.data != "" and form.description.data != "":
+                f = Flashcard (title = form.title.data, description = form.description.data)
+                u.flashcards.append(f)
+                db.session.add(f)
+                db.session.commit()
+                return redirect('/flashcard')
+            else:
+                flash("title and description should be not empty")
+                return redirect('/flashcard')
+    #more code about flashcard are put here, this section is for Kim 
+    return render_template("flashcard.html", form=form, flashcards=flashcards) #expect the flashcard.html will be render when user navigate to /notes
 
 #podomorotimer features
 @myapp_obj.route("/timer", methods=["GET", "POST"])

@@ -18,6 +18,10 @@ class User(UserMixin, db.Model):
                             backref = 'user', 
                             lazy = 'dynamic', 
                             cascade = 'all, delete, delete-orphan' )
+    flashcards = db.relationship('Flashcard', 
+				  backref = 'user', 
+				  lazy = 'dynamic',
+				  cascade = 'all, delete, delete-orphan' )
     #posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def set_password(self, password):
@@ -38,6 +42,14 @@ class Task(db.Model):
     date_started = db.Column(db.Date)
     date_ended = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Flashcard(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128))
+    description = db.Column(db.String(256))
+    date_started = db.Column(db.Date)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
 
 """class FlaskCard(db.Model):
     id =
