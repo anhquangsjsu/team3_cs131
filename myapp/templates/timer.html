@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>My pomodoro timer</h2>
-<div>
+<div id="timer-container">
     <div id='timer_changer'>
         <form method='POST' novalidate>
             {{timer_change_form.hidden_tag()}}
@@ -9,20 +9,23 @@
         </form>
     </div>
     <hr>
+    <b>{{timer_message}}</b>
     <div id="timer_display">
-        {{timer_type}}: <span id="time_text">{{timerRemain}}</span>
+        {{timer_type}}: <span id="time_text" data-time='{{timerRemain}}'></span>
     </div>
     <form method='post' action="" novalidate>
         {{ timer_form.hidden_tag() }}
         <p>{{timer_form.start_timer()}} {{timer_form.stop_timer()}} {{timer_form.reset_timer()}}</p>
     </form>
     <div>
+        {% if current_task %}
         <h5>Current task: {{current_task.title}}</h5>
         <a href="/finish_task/{{current_task.id}}">Finish current task</a>
+        {% endif %}
     </div>
 </div>
 <hr>
-<div>
+<div id="task-container">
     {% if tasks %}
         <h4>Task lists:</h4>
         {% for t in tasks %}
@@ -62,4 +65,18 @@
     </form>
     {% endif %}
 </div>
+<hr>
+{% if not timer_setting %}
+<a style="font-size: 1.5em;" href="/timer_setting">Customize your timer</a>
+{% else %}
+<div id="setting-container">
+    <form method='post' novalidate>
+    {{ timer_setting_form.hidden_tag() }}
+        <p>{{timer_setting_form.task_time.label}}  {{timer_setting_form.task_time()}}</p>
+        <p>{{timer_setting_form.break_time.label}}  {{timer_setting_form.break_time()}}</p>
+        <p>{{timer_setting_form.auto_break.label}}  {{timer_setting_form.auto_break()}}</p>
+        <p>{{timer_setting_form.confirm()}} {{timer_setting_form.cancel()}}</p>
+    </form>
+</div>
+{% endif %}
 {% endblock %}

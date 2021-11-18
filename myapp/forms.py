@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import IntegerField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -39,3 +39,10 @@ class SignUpForm(FlaskForm):
     email=StringField('Email')
     submit = SubmitField('Add me')
     login = SubmitField('Log in')
+
+class TimerSettingForm(FlaskForm):
+    task_time = IntegerField('Task time', default = 1800)
+    break_time = IntegerField('Break time', default = 300)
+    auto_break = BooleanField('Auto switch to break when finished?')
+    confirm = SubmitField("Confirm setting")
+    cancel = SubmitField("Cancel")

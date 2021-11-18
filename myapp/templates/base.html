@@ -24,15 +24,27 @@
     {% block content %}
     {% endblock %}
 <script>
+    //Getting the UIs 
     let start_timer_btn = document.getElementById("start_timer");
     let timer_text = document.getElementById("time_text");
+    //retrieve time form the UI
+    let time_data = timer_text.getAttribute('data-time')
+    //Formating the time digits
+    let seconds = time_data % 60;
+    if (seconds < 10) seconds = 0 + "" + seconds;
+    let minutes = Math.floor(time_data / 60);
+    if (minutes < 10) minutes = 0 + "" + minutes;
+    timer_text.innerText = minutes + " : " + seconds;
+    //when user click start time, update timer display every 1 second
     start_timer_btn.addEventListener("click",function(){
-        let text = timer_text.innerText;
-        
-    setInterval(function(){
-            text -= 1;
-            timer_text.innerText = text;
-        }, 1000) 
+        setInterval(function(){
+                        time_data -= 1;
+                        let seconds = time_data % 60;
+                        if (seconds < 10) seconds = 0 + "" + seconds;
+                        let minutes = Math.floor(time_data / 60);
+                        if (minutes < 10) minutes = 0 + "" + minutes;
+                        timer_text.innerText = minutes + " : " + seconds;
+                    }, 1000) 
     })
 </script>
 </body>

@@ -1,0 +1,5 @@
+site_name: Unforgettable Documentation
+nav:
+  - Home: index.md
+  - Functions: functions.md
+  - Classes: classes.md

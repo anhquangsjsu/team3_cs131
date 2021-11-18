@@ -14,11 +14,11 @@ class User(UserMixin, db.Model):
     password  = db.Column(db.String(128))
     task_timer = db.Column(db.Integer)
     break_timer = db.Column(db.Integer)
+    auto_break = db.Column(db.Boolean)
     tasks = db.relationship('Task', 
                             backref = 'user', 
                             lazy = 'dynamic', 
                             cascade = 'all, delete, delete-orphan' )
-    #posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
@@ -39,23 +39,6 @@ class Task(db.Model):
     date_ended = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-"""class FlaskCard(db.Model):
-    id =
-    title =
-    description =
-    date_added = 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-"""
-"""
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(256))
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return f'<Post {self.id}: {self.body}>'
-"""
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
