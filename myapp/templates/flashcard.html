@@ -1,4 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>My flash cards</h2>
+<h2>My Flashcards</h2>
+ {% if flashcards %}
+ {% for f in flashcards %}
+ <p> {{ f.title}} <b> {{f.description}} </b> </p>
+ {% endfor %} 
+ {% else %}
+ <p> No flashcard </p>
+ {% endif %}
+ {% with messages = get_flashed_messages() %}
+ {% if messages %}
+ <div>
+    {% for m in messages %}
+    <p>{{ m }}</p>
+    {% endfor %}
+ </div>
+ {% endif %}
+ {% endwith %}
+ <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+
+        <p> {{ form.title.label }} {{ form.title(size=32) }}</p>
+
+        <p> {{ form.description.label }} {{ form.description(size=32) }}</p>
+
+        <p> {{form.cancel()}} {{ form.add() }} {{form.share()}} </p>
+
+        
+	
+    </form> 
+             
 {% endblock %}

@@ -46,3 +46,8 @@ class TimerSettingForm(FlaskForm):
     auto_break = BooleanField('Auto switch to break when finished?')
     confirm = SubmitField("Confirm setting")
     cancel = SubmitField("Cancel")
+class AddFlashcardForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description')
+    add = SubmitField ('Add')
+    cancel = SubmitField ('Cancel')
