@@ -7,6 +7,25 @@ from myapp import login
 
 
 class User(UserMixin, db.Model):
+    '''
+    User model, the center of the app, this is where information of the user as well as the app features data are stored
+
+        Relationships with:
+            Task        One-to-Many
+            Note        One-to-Many
+            Flashcard   One-to-Many
+
+        Data Fields:
+            id (int)                integer indicate id of user
+            username (str)          string indicate username
+            password (str)          string indicate password
+            email   (str)           string indicate email
+            task_timer (int)        integer indicate user task timer setting
+            break_timer (int)       integer indicate user break timer setting
+            tasks   (List<obj>)     list of object containing tasks added by the user, used in the timer feature, connected the User with the Task model class
+            flashcards (List<obj>)  list of object containing flashcards added by the user, used in the flash card feature, connected the User with the Flashcard model class 
+            notes (List<obj>)       list of object containing notes added by the user, used in the notes feature, connected the User with the Note model class
+    '''
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
@@ -26,20 +45,48 @@ class User(UserMixin, db.Model):
     #posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def set_password(self, password):
+        '''
+        this function will help set password for user using hash function
+            
+            Parameters:
+                self (obj)          reference to this class instance
+                password (string)   a string containing password
+        '''
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
+        '''
+        this function will check the password using hash function, return a boolean
+
+            Parameters:
+                self (obj)          reference to this class instance
+                password (string)   a string containing password
+
+            Returns:
+                a boolean indicate if the password matches
+        '''
         return check_password_hash(self.password, password)
 
-    def __repr__(self):
-        return f'<User {self.id}: {self.username}>'
-
 class Task(db.Model):
+    '''
+    A model present the task added by the user in the timer feature
+
+        Relationships with:
+            User        Many-to-One
+        
+        Data Fields:
+            id (int)            unique id integer of the task
+            title (str)         title string of the the task
+            note (str)          note string of the task
+            finished (bool)     finished flag boolean of the the task
+            date_started (Date) a date when the task started
+            date_ended (Date)   a date when the task is finished
+            user_id (int)       id of the user who owned the task
+    '''
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), unique=True)
     note = db.Column(db.String(256))
     finished = db.Column(db.Boolean)
-    remained_time = db.Column(db.Integer) #seconds
     date_started = db.Column(db.Date)
     date_ended = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

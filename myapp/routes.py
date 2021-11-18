@@ -30,60 +30,124 @@ def refreshTimerPage():
 
 #Classes
 class Timer():
-        def __init__(self, m):
-            self.max = m
-            self.auto_break = False
+    '''
+    Global variables are used in this class to form a basic countdown timer a few controls:
+    1. Start timer
+    2. Stop timer
+    3. Reset timer
+    4. Change to different time
+    '''
+    def __init__(self, m):
         '''
-        the functions will start the timer and countdown every 1 second
+        the constructor, take in self and a time amount in seconds, will initialize the instance's max
+            
+            Parameters
+                self (obj) refererence to the obj instance
+                m (int)    max amount of time set for the timer 
         '''
-        def start(self):
-            global timerStopped
-            global timerRemain
-            global timerType
-            global autoBreak
-            global timerMessage
-            timerStopped = False
-            while (not timerStopped and timerRemain > 0):
-                timerRemain -= 1 
-                time.sleep(1)    
-            if timerRemain <= 0:
-                self.stop()
-                timerMessage = "Timer is done!"
-                self.reset()
-                if autoBreak and timerType ==  'task timer':
-                    timerType = 'break timer'
-                    self.change_time(current_user.break_timer)
-                    refreshTimerPage()
+        self.max = m
+    def start(self):
+        '''
+        the functions will start the timer and countdown every 1 second, when timer reached 0, 
+        notify the user that timer is stopped, and switch to break timer if the user has the auto break setting on
 
-        def reset(self):
-            global timerRemain
-            timerRemain = self.max
+            Parameters:
+                self (obj)                  a reference to this object instance
+                global autoBreak (bool)     a boolean that keep track of user's auto entering break timer setting when finished the timer     
+                global timerStopped(bool)   a boolean to indicate when the timer is stopped, used to stop the while loop
+                global timerRemain (int)    an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+                global timerType (str)      a string indicates which type of timer is chosen from the change timer form
+                global timerMessage (str)   a string stored message regarding the timer            
+        
+        '''
+        global timerStopped
+        global timerRemain
+        global timerType
+        global autoBreak
+        global timerMessage
+        timerStopped = False
+        while (not timerStopped and timerRemain > 0):
+            timerRemain -= 1 
+            time.sleep(1)    
+        if timerRemain <= 0:
+            self.stop()
+            timerMessage = "Timer is done!"
+            self.reset()
+            if autoBreak and timerType ==  'task timer':
+                timerType = 'break timer'
+                self.change_time(current_user.break_timer)
+                refreshTimerPage()
 
-        def stop(self):
-            global timerStopped
-            global timerMessage
-            global timerRemain
-            timerMessage = "Timer stopped"
-            timerStopped = True
+    def reset(self):
+        '''
+        reset the timer countdown to max time
+            
+            Parameters:
+                self (obj)                  a reference to this object instance
+                global timerRemain (int)    an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+        '''
+        global timerRemain
+        timerRemain = self.max
 
-        def change_time(self, time):
-            global timerRemain
-            self.max = time
-            timerRemain = time
+    def stop(self):
+        '''
+        stops the timer by signaling with timerStopped flag and notifies the user with a message
+
+            Parameters:
+                self (obj)                  a reference to this object instance
+                global timerStopped(bool)   a boolean to indicate when the timer is stopped, used to stop the while loop
+                global timerType (str)      a string indicates which type of timer is chosen from the change timer form
+                global timerMessage (str)   a string stored message regarding the timer    
+        '''
+        global timerStopped
+        global timerMessage
+        timerMessage = "Timer stopped"
+        timerStopped = True
+
+    def change_time(self, time):
+        '''
+        change the max time of timer and the remaining time
+
+            Parameters:
+                self (obj)                      a reference to this object instance
+                time (int)                      an integer presents amount of time in seconds
+                global timerRemain (int)        an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+        '''
+        global timerRemain
+        self.max = time
+        timerRemain = time
             
 ###Login logout features
 @myapp_obj.route("/loggedin")
 @login_required
 def log():
-    return "Hi you are looged in"
+    '''
+    to notify the user that they logged in
+
+        Returns
+            a string message to inform user their loged in status
+    '''
+    return "Hi you are loged in"
 
 @myapp_obj.route("/logout")
 def logout():
+    '''
+    will log out the current user and redirect back to the login page
+    '''
     logout_user()
-    return redirect('/')
+    return redirect('/login')
 
 @myapp_obj.route("/login", methods=['GET','POST'])
 def login():
+    '''
+    returns the sign in page when navigating to /login and controls the log in form, 
+    The log in page will be initially displayed when user starts the app 
+
+        Returns
+                redirecting back to the page
+            or
+                a html corresponding to the login page that holds form for user to sign in
+    '''
     form = LoginForm()
     if form.validate_on_submit():
         #if user click submit
@@ -102,6 +166,14 @@ def login():
 
 @myapp_obj.route('/signup', methods=['GET','POST'])
 def signup():
+    '''
+    returns the sign up user page when navigating to /signup and controls the sign up form 
+
+        Returns
+                redirecting back to the page
+            or
+                a html corresponding to the sign up page that holds form for user to register new user
+    '''
     form = SignUpForm()
     if form.validate_on_submit():
         if form.submit.data == True:
@@ -131,6 +203,12 @@ def signup():
 
 @myapp_obj.route('/signedup/<string:user>', methods=['GET', 'POST'])
 def signedup(user):
+    '''
+    returns the signedup.html to notify user successful sign up and give them option to sign in later
+
+        Returns
+            a html to notify that user succesfully signed up
+    '''
     return render_template('signedup.html',user = user)
 
 #Notes features
@@ -163,6 +241,27 @@ def flashcard():
 #podomorotimer features
 @myapp_obj.route("/timer", methods=["GET", "POST"])
 def timer():
+    '''
+    Render the timer html portion of the app when user navigate to /timer route or click timer link in the navigation bar at the top
+    This functions will:
+        1. Control forms: the timer form, add task form, change timer form, edit task form, and timer 
+        2. Set up the timer accordingly to task timer or break timer based on the global variables
+    
+        Parameters
+            global adding (bool)        a flag to tell if adding form is toggled on
+            global autoBreak (bool)     a boolean that keep track of user's auto entering break timer setting when finished the timer
+            global timerSetting (bool)  a flag to tell if customize timer setting form is on         
+            global editing (bool)       a flag to tell if the editing form of a particular task is on when user click edit button under neath the task
+            global editTaskID (int)     an integer to keep track the current task to be edit, only one task can be edit at a time
+            global timerRemain (int)    an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+            global timerType (str)      a string indicates which type of timer is chosen from the change timer form
+            global timerMessage (str)   a string stored message regarding the timer
+
+        Returns
+                redirecting to itself
+            or
+                a template timer.html of the page corresponding to the route /timer
+    '''
     #forms
     timer_form = TimerForm()
     add_task_form = AddTaskForm()
@@ -183,6 +282,7 @@ def timer():
     global timerMessage
     global timerSetting
     global timerRemain
+
     u =  User.query.filter_by(username = current_user.username).first()
     tasks = u.tasks.filter_by(finished = False).all()
     if tasks:
@@ -190,9 +290,8 @@ def timer():
     
     #more code about the timer are put here, this is Quang's section
     #initialize the timer with user's settings 
-    
     if timerType == 'task timer':
-        if timerRemain == -99:
+        if timerRemain == -99: #to detect when 
             timerRemain = u.task_timer
         timer = Timer(u.task_timer) #1800s by default if not set
     else:
@@ -221,12 +320,14 @@ def timer():
             timerType = 'break timer'
             timer.change_time(u.break_timer)
     
-    #add task controller
+    #add task controllers
+        #add task toggle on or off
     if change_to_add.validate_on_submit() and change_to_add.submit.data:
         adding = True
         refreshTimerPage()
-
+        #add task form controller
     if add_task_form.validate_on_submit() and adding:
+        #add is clicked
         if add_task_form.add_task.data:
             t = Task(title = add_task_form.title.data,
                     note = add_task_form.note.data,
@@ -239,6 +340,7 @@ def timer():
                     db.session.add(t)
                     db.session.commit()
                     adding= False
+        # cancel clicked
         elif add_task_form.cancel.data:
             adding = False
             add_task_form.title = ''
@@ -248,6 +350,7 @@ def timer():
     
     #edit task controller
     if edit_task_form.validate_on_submit() and editing:
+        #if user click coonfirm
         if edit_task_form.confirm.data:
             u =  User.query.filter_by(username = current_user.username).first()
             if u != None:
@@ -260,6 +363,7 @@ def timer():
                         editing = False
                         editTaskID = 99999999
                         return redirect('/timer')
+        #cancel is clicked
         elif edit_task_form.cancel.data:
             editing = False
             editTaskID = 99999999
@@ -268,6 +372,7 @@ def timer():
     #timer setting controller
     if timer_setting_form.validate_on_submit() and timerSetting:
         timerSetting = False
+        #confirm field clicked
         if timer_setting_form.confirm.data:
             u =  User.query.filter_by(username = current_user.username).first()
             if u != None:
@@ -281,6 +386,7 @@ def timer():
                     timer.change_time(u.break_timer)
                 autoBreak = u.auto_break 
                 return redirect('/timer')
+        #cancel field clicked
         elif timer_setting_form.cancel.data:
             return redirect('/timer')
         
@@ -305,6 +411,17 @@ def timer():
 
 @myapp_obj.route("/edit_task/<string:taskid>")
 def edit_task(taskid):
+    '''
+    function trigger when user click edit a task, will toggle edit form underneath the task based on its id when user click Edit
+
+        Parameters:
+            taskid (int):      a task id
+            editing (boolean): a global variable to indicate if edit form is toggled on
+            editTaskID (int):  a global varialbe to keep track the current task to be edited so proper form can be displayed according to task id
+           
+        Returns
+            redirecting route back to the /timer 
+    '''
     global editing
     global editTaskID
     editing = True
@@ -313,6 +430,15 @@ def edit_task(taskid):
 
 @myapp_obj.route("/delete_task/<string:taskid>")
 def delete_task(taskid):
+    '''
+    function trigger when user click delete task, will delete a task using its id 
+
+        Parameters:
+            taskid (int): a task id
+
+        Returns
+            redirecting route back to the /timer 
+    '''
     Task.query.filter_by(id= taskid).delete()
     db.session.commit()
     u =  User.query.filter_by(username = current_user.username).first()
@@ -320,6 +446,16 @@ def delete_task(taskid):
 
 @myapp_obj.route("/finish_task/<string:taskid>")
 def finish_task(taskid):
+    '''
+    function trigger when user click finish task, will mark a particular task finished using its id in the user tasks
+    also mark the finished date
+        
+        Parameters:
+            taskid (int): a task id
+
+        Returns
+            redirecting route back to the /timer
+    '''
     t = Task.query.filter_by(id = taskid).first()
     t.finished = True
     t.date_ended = date.today()
@@ -332,8 +468,11 @@ def timer_setting():
     function trigger when user click "Customize timer", set the global
     variable timerSetting to true to toggle on the timer setting form
 
-    Return
-        redirecting route back to the /timer route 
+        Parameters
+            timerSetting (boolean) a global variable keep track if the setting form for timer is on
+
+        Returns
+            redirecting route back to the /timer route 
     '''
     global timerSetting 
     timerSetting = True
@@ -344,10 +483,10 @@ def home():
     '''
     Home page of the app after the user logged in
 
-    Returns:
-            html to home page if user logged in
-        Or
-            html to login page otherwise
+        Returns:
+                html to home page if user logged in
+            Or
+                html to login page otherwise
     '''
     if current_user.is_authenticated:
         return render_template('home.html', username = current_user.username)
