@@ -13,7 +13,7 @@
     <div id="timer_display">
         {{timer_type}}: <span id="time_text" data-time='{{timerRemain}}'></span>
     </div>
-    <form method='post' action="" novalidate>
+    <form method='POST' action="" novalidate>
         {{ timer_form.hidden_tag() }}
         <p>{{timer_form.start_timer()}} {{timer_form.stop_timer()}} {{timer_form.reset_timer()}}</p>
     </form>
@@ -34,7 +34,7 @@
             
             {% if (t.id == editid) and (editing == True) %}
             <form method='POST' novalidate>
-                {{edit_task_form.hidden_tag()}}
+                {{edit_task_form.csrf_token}}
                 <p>{{edit_task_form.title.label}} {{edit_task_form.title()}}</p>
                 <p>{{edit_task_form.note.label}} {{edit_task_form.note()}}</p>
                 <p>{{edit_task_form.confirm()}} {{edit_task_form.cancel()}}</p>
@@ -52,14 +52,14 @@
     {% endif %}
     
     {% if adding %}
-    <form method='post' novalidate>
-        {{add_task_form.hidden_tag()}}
+    <form method='POST' novalidate>
+        {{ add_task_form.csrf_token }}
             <p>{{add_task_form.title.label}}: {{add_task_form.title()}}</p>
             <p>{{add_task_form.note.label}}: {{add_task_form.note()}}</p>
             <p>{{add_task_form.add_task()}} {{add_task_form.cancel()}}</p>
-        </form>
+    </form>
     {% else %}
-    <form method='post' novalidate>
+    <form method='POST' novalidate>
     {{change_to_add.hidden_tag()}}
         <p>{{change_to_add.submit()}}</p>
     </form>
@@ -70,7 +70,7 @@
 <a style="font-size: 1.5em;" href="/timer_setting">Customize your timer</a>
 {% else %}
 <div id="setting-container">
-    <form method='post' novalidate>
+    <form method='POST' novalidate>
     {{ timer_setting_form.hidden_tag() }}
         <p>{{timer_setting_form.task_time.label}}  {{timer_setting_form.task_time()}}</p>
         <p>{{timer_setting_form.break_time.label}}  {{timer_setting_form.break_time()}}</p>

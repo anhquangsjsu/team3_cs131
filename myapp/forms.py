@@ -19,7 +19,7 @@ class ChangeTimerForm(FlaskForm):
     break_timer = SubmitField('Break timer')
 
 class AddTaskForm(FlaskForm):
-    title = StringField('Task title', validators=[DataRequired()])
+    title = StringField('Task title')
     note = StringField('Note')
     add_task = SubmitField('Add task')
     cancel = SubmitField('Cancel')
@@ -46,6 +46,7 @@ class TimerSettingForm(FlaskForm):
     auto_break = BooleanField('Auto switch to break when finished?')
     confirm = SubmitField("Confirm setting")
     cancel = SubmitField("Cancel")
+    
 class AddFlashcardForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description')

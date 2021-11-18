@@ -12,7 +12,7 @@ from flask_login import current_user, login_user, logout_user, login_required
     #default options
 maxTime = 2000
 breakTime = 300
-timerRemain = maxTime
+timerRemain = -99
 timerLeft = maxTime
 timerStopped = False
 autoBreak = False
@@ -44,15 +44,16 @@ class Timer():
             global timerMessage
             timerStopped = False
             while (not timerStopped and timerRemain > 0):
-                timerRemain -= 1
-                time.sleep(1) 
-            self.stop()
-            timerMessage = "Timer is done!"
-            self.reset()
-            if autoBreak and timerType ==  'task timer':
-                timerType = 'break timer'
-                self.change_time(current_user.break_timer)
-                refreshTimerPage()
+                timerRemain -= 1 
+                time.sleep(1)    
+            if timerRemain <= 0:
+                self.stop()
+                timerMessage = "Timer is done!"
+                self.reset()
+                if autoBreak and timerType ==  'task timer':
+                    timerType = 'break timer'
+                    self.change_time(current_user.break_timer)
+                    refreshTimerPage()
 
         def reset(self):
             global timerRemain
@@ -61,6 +62,7 @@ class Timer():
         def stop(self):
             global timerStopped
             global timerMessage
+            global timerRemain
             timerMessage = "Timer stopped"
             timerStopped = True
 
@@ -180,6 +182,7 @@ def timer():
     global autoBreak
     global timerMessage
     global timerSetting
+    global timerRemain
     u =  User.query.filter_by(username = current_user.username).first()
     tasks = u.tasks.filter_by(finished = False).all()
     if tasks:
@@ -187,17 +190,21 @@ def timer():
     
     #more code about the timer are put here, this is Quang's section
     #initialize the timer with user's settings 
+    
     if timerType == 'task timer':
+        if timerRemain == -99:
+            timerRemain = u.task_timer
         timer = Timer(u.task_timer) #1800s by default if not set
     else:
+        if timerRemain == -99:
+            timerRemain = u.break_timer
         timer = Timer(u.break_timer) #300s by default  
     autoBreak = u.auto_break #False by default
-
      #timer controller
     if timer_form.validate_on_submit():
         if timer_form.start_timer.data: #if user hit start timer
             timer.start()   
-        elif timer_form.stop_timer.data: #if user hit stop timer
+        elif timer_form.stop_timer.data and not timerStopped: #if user hit stop timer
             timer.stop()
             refreshTimerPage()
         elif timer_form.reset_timer.data: #if user hit reset timer
@@ -219,26 +226,28 @@ def timer():
         adding = True
         refreshTimerPage()
 
-    if add_task_form.validate_on_submit():
+    if add_task_form.validate_on_submit() and adding:
         if add_task_form.add_task.data:
-            adding= False
             t = Task(title = add_task_form.title.data,
                     note = add_task_form.note.data,
                     finished = False,
                     date_started = date.today())
             u =  User.query.filter_by(username = current_user.username).first()
             if u != None:
-                u.tasks.append(t)
-                db.session.add(t)
-                db.session.commit()
+                if add_task_form.title.data != '':
+                    u.tasks.append(t)
+                    db.session.add(t)
+                    db.session.commit()
+                    adding= False
         elif add_task_form.cancel.data:
+            adding = False
             add_task_form.title = ''
             add_task_form.note = ''
-        return redirect('/timer')
+        return redirect('/timer')    
+        
     
     #edit task controller
-    if edit_task_form.validate_on_submit():
-        editing = False
+    if edit_task_form.validate_on_submit() and editing:
         if edit_task_form.confirm.data:
             u =  User.query.filter_by(username = current_user.username).first()
             if u != None:
@@ -248,11 +257,16 @@ def timer():
                         task.title = edit_task_form.title.data
                         task.note = edit_task_form.note.data
                         db.session.commit()
-        editTaskID = 99999999
-        return redirect('/timer')
+                        editing = False
+                        editTaskID = 99999999
+                        return redirect('/timer')
+        elif edit_task_form.cancel.data:
+            editing = False
+            editTaskID = 99999999
+            return redirect('/timer')
     
     #timer setting controller
-    if timer_setting_form.validate_on_submit():
+    if timer_setting_form.validate_on_submit() and timerSetting:
         timerSetting = False
         if timer_setting_form.confirm.data:
             u =  User.query.filter_by(username = current_user.username).first()
@@ -260,9 +274,15 @@ def timer():
                 u.task_timer = timer_setting_form.task_time.data
                 u.break_timer = timer_setting_form.break_time.data
                 u.auto_break = timer_setting_form.auto_break.data
-                print("here")
                 db.session.commit()
-        return redirect('/timer')
+                if timerType == 'task timer':
+                    timer.change_time(u.task_timer) 
+                else:
+                    timer.change_time(u.break_timer)
+                autoBreak = u.auto_break 
+                return redirect('/timer')
+        elif timer_setting_form.cancel.data:
+            return redirect('/timer')
         
     return render_template("timer.html", 
                             timer = timer, 
