@@ -91,13 +91,13 @@ class SignUpForm(FlaskForm):
             password (str)      a string field indicate password
             email (str)         a string field indicate email     
             submit              a submit field triggered when user click Add me
-            login              a submit field triggered when user click Log in        
+            login              a submit field triggered when user click Take me back       
     '''
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     email=StringField('Email')
     submit = SubmitField('Add me')
-    login = SubmitField('Log in')
+    login = SubmitField('Take me back')
 
 class TimerSettingForm(FlaskForm):
     '''

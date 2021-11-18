@@ -176,7 +176,8 @@ def signup():
     '''
     form = SignUpForm()
     if form.validate_on_submit():
-        if form.submit.data == True:
+        #when user click add me
+        if form.submit.data:
             #check if the user is already there
             user =  User.query.filter_by(username=form.username.data).first()
             if user is None:
@@ -197,7 +198,8 @@ def signup():
             else:
                 flash('User already exists, please try a differen user')
                 return redirect('/signup')
-        elif form.login.data == True:
+        #when user click take me back
+        elif form.login.data:
             return redirect('/login')
     return render_template('signup.html', form = form)
 
