@@ -1,11 +1,11 @@
 from myapp import myapp_obj
 
-from myapp.forms import TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import request, render_template, flash, redirect
 from datetime import date
 import time
 from myapp import db
-from myapp.models import User, Task, Flashcard
+from myapp.models import User, Task, Flashcard, Notes
 from flask_login import current_user, login_user, logout_user, login_required
 
 #global variables for the pomodoro timer
@@ -23,7 +23,9 @@ editTaskID = 999999999
 adding = False #flag to toggle the add task form when click "Add task"
 editing = False
 timerSetting = False
-
+    #Notes global variables
+filtered = False
+filterList = []
 #helper functions
 def refreshTimerPage():
     return redirect('/timer')
@@ -214,10 +216,42 @@ def signedup(user):
     return render_template('signedup.html',user = user)
 
 #Notes features
-@myapp_obj.route("/notes")
+@myapp_obj.route("/notes", methods=["GET", "POST"])
 def notes():
     #more code about notes are put here, this section is for Jason
-    return render_template("notes.html") #expect the notes.htm  l will be render when user navigate to /notes
+    global filterList
+    global filtered
+    addnoteform = AddNoteForm()
+    filterform = filterNotesForm()
+    u = User.query.filter_by(username = current_user.username).first()
+    if u != None:
+        if filtered: 
+            notes = filteredList
+        else:
+            notes = u.notes.all()
+        
+
+    if filterform.validate_on_submit():
+        if filterform.key.data != "":
+            filtered = True
+            filterList.clear()
+            for n in notes:
+                if filterform.filter.data in n.title:
+                    filterList.append(n)
+
+            return redirect("/notes")
+    if addnoteform.validate_on_submit():
+        if addnoteform.submit.data:
+            if addnoteform.title.data != "":
+                n = Notes(title = addnoteform.title.data, body = addnoteform.body.data, password = addnoteform.password.data)
+                db.session.add(n)
+                db.session.commit()
+                flash(f'The note {form.title.data} has been added')
+                return redirect("/notes")
+            else:
+                flash("Your note needs a title in order to be created")
+                return redirect("/notes")
+    return render_template("notes.html", form = addnoteform, form2 = filterform, all_notes = notes) #expect the notes.htm  l will be render when user navigate to /notes
 
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
