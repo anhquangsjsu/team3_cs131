@@ -106,16 +106,23 @@ class Flashcard(db.Model):
     date_added = 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 """
-"""
-class Post(db.Model):
+
+class Notes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(256))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    password = db.Column(db.String(128))
+    title = db.Column(db.String(32), unique = True)
+    def repr(self):
+        return f'<Post {self.title}: {self.body}>'
 
-    def __repr__(self):
-        return f'<Post {self.id}: {self.body}>'
-"""
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
