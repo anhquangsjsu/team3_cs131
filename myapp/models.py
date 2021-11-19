@@ -105,6 +105,7 @@ class Flashcard(db.Model):
     description =
     date_added = 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    please work
 """
 
 class Notes(db.Model):
