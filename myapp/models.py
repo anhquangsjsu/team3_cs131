@@ -42,7 +42,7 @@ class User(UserMixin, db.Model):
 				  backref = 'user', 
 				  lazy = 'dynamic',
 				  cascade = 'all, delete, delete-orphan' )
-    #posts = db.relationship('Post', backref='author', lazy='dynamic')
+    notes = db.relationship('Notes', backref='author', lazy='dynamic', cascade = 'all, delete, delete-orphan')
 
     def set_password(self, password):
         '''
@@ -105,6 +105,7 @@ class Flashcard(db.Model):
     description =
     date_added = 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    please work
 """
 
 class Notes(db.Model):
