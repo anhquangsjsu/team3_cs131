@@ -46,7 +46,7 @@ class User(UserMixin, db.Model):
 
     def set_password(self, password):
         '''
-        this function will help set password for user using hash function
+        This function will help set password for user using hash function
             
             Parameters:
                 self (obj)          reference to this class instance
