@@ -43,7 +43,7 @@ class Timer():
         '''
         the constructor, take in self and a time amount in seconds, will initialize the instance's max
             
-            Parameters
+            Parameters:
                 self (obj) refererence to the obj instance
                 m (int)    max amount of time set for the timer 
         '''
@@ -126,7 +126,7 @@ def log():
     '''
     to notify the user that they logged in
 
-        Returns
+        Returns:
             a string message to inform user their loged in status
     '''
     return "Hi you are loged in"
@@ -135,6 +135,9 @@ def log():
 def logout():
     '''
     will log out the current user and redirect back to the login page
+         
+         Returns:
+                redirecting back to the page
     '''
     logout_user()
     return redirect('/login')
@@ -145,7 +148,7 @@ def login():
     returns the sign in page when navigating to /login and controls the log in form, 
     The log in page will be initially displayed when user starts the app 
 
-        Returns
+        Returns:
                 redirecting back to the page
             or
                 a html corresponding to the login page that holds form for user to sign in
@@ -171,7 +174,7 @@ def signup():
     '''
     returns the sign up user page when navigating to /signup and controls the sign up form 
 
-        Returns
+        Returns:
                 redirecting back to the page
             or
                 a html corresponding to the sign up page that holds form for user to register new user
@@ -210,7 +213,7 @@ def signedup(user):
     '''
     returns the signedup.html to notify user successful sign up and give them option to sign in later
 
-        Returns
+        Returns:
             a html to notify that user succesfully signed up
     '''
     return render_template('signedup.html',user = user)
@@ -279,11 +282,11 @@ def flashcard():
 def timer():
     '''
     Render the timer html portion of the app when user navigate to /timer route or click timer link in the navigation bar at the top
-    This functions will:
+    This function will:
         1. Control forms: the timer form, add task form, change timer form, edit task form, and timer 
         2. Set up the timer accordingly to task timer or break timer based on the global variables
     
-        Parameters
+        Parameters:
             global adding (bool)        a flag to tell if adding form is toggled on
             global autoBreak (bool)     a boolean that keep track of user's auto entering break timer setting when finished the timer
             global timerSetting (bool)  a flag to tell if customize timer setting form is on         
@@ -293,7 +296,7 @@ def timer():
             global timerType (str)      a string indicates which type of timer is chosen from the change timer form
             global timerMessage (str)   a string stored message regarding the timer
 
-        Returns
+        Returns:
                 redirecting to itself
             or
                 a template timer.html of the page corresponding to the route /timer
@@ -455,7 +458,7 @@ def edit_task(taskid):
             editing (boolean): a global variable to indicate if edit form is toggled on
             editTaskID (int):  a global varialbe to keep track the current task to be edited so proper form can be displayed according to task id
            
-        Returns
+        Returns:
             redirecting route back to the /timer 
     '''
     global editing
@@ -472,7 +475,7 @@ def delete_task(taskid):
         Parameters:
             taskid (int): a task id
 
-        Returns
+        Returns:
             redirecting route back to the /timer 
     '''
     Task.query.filter_by(id= taskid).delete()
@@ -489,7 +492,7 @@ def finish_task(taskid):
         Parameters:
             taskid (int): a task id
 
-        Returns
+        Returns:
             redirecting route back to the /timer
     '''
     t = Task.query.filter_by(id = taskid).first()
@@ -504,10 +507,10 @@ def timer_setting():
     function trigger when user click "Customize timer", set the global
     variable timerSetting to true to toggle on the timer setting form
 
-        Parameters
+        Parameters:
             timerSetting (boolean) a global variable keep track if the setting form for timer is on
 
-        Returns
+        Returns:
             redirecting route back to the /timer route 
     '''
     global timerSetting 
@@ -517,7 +520,7 @@ def timer_setting():
 @myapp_obj.route("/")
 def home():
     '''
-    Home page of the app after the user logged in
+    renders the home page of the app after the user logged in or sends the user to login page when they did not sign in
 
         Returns:
                 html to home page if user logged in

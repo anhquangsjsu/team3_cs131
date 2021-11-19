@@ -1,11 +1,10 @@
 # Welcome to Unforgettable documentation
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
-
 ## How to run the app
-1. From team3_cs131 folder, run the command  `python3 run.py`
-2. The login page will appear, either login using your own account or create account by signup
-3. When signed in, user will be able to use the 3 services offered by Unforgettable: 
+1. Clone the project from git repo at [Github](https://github.com/anhquangsjsu/team3_cs131).
+2. From team3_cs131 folder, run the command  `python3 run.py`
+3. The login page will appear, either login using your own account or create account by signup
+4. When signed in, user will be able to use the 3 services offered by Unforgettable: 
     * Flash cards to study terms
     * Notes to memorize important information
     * Pomodoro timer to help focus in doing tasks 
@@ -15,7 +14,7 @@ For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
 ## Project layout
     README.md
-    Specification.md 
+    Specification.md        # markdown file store the usecase descriptions and requirements of the project
     run.py                  # to run the app
     myapp/
         __init.py__         # initialization code.
