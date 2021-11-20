@@ -1,6 +1,6 @@
 from myapp import myapp_obj
 
-from myapp.forms import AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import request, render_template, flash, redirect
 from datetime import date
 import time
@@ -23,6 +23,8 @@ editTaskID = 999999999
 adding = False #flag to toggle the add task form when click "Add task"
 editing = False
 timerSetting = False
+    #flashcard global variables 
+sharing = False 
     #Notes global variables
 filtered = False
 filterList = []
@@ -259,7 +261,9 @@ def notes():
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
 def flashcard():
+    global sharing 
     form = AddFlashcardForm()
+    share_flashcard_form = ShareFlashcardForm()
     u = User.query.filter_by(username = current_user.username).first() 
     if u != None:
         flashcards = u.flashcards.all()
@@ -274,6 +278,23 @@ def flashcard():
             else:
                 flash("title and description should be not empty")
                 return redirect('/flashcard')
+    #share flashcard features
+    if share_flashcard_form.validate_on_submit() and adding:
+        #share is clicked
+        if share_flashcard_form.share_flashcard.data:
+            f = Flashcard(username = share_flashcard_form.username.data, finished = False, date_shared = date.today()))
+            u = User.query.filter_by(username = current_user)
+            if u != None:
+                if share_flashcard_form.username.data !='':
+                    u.flashcards.append(f)
+                    db.session.add(f)
+                    db.session.commit(f)
+                    sharing = False
+        #cancel is clicked
+        elif share_flashcard_form.cancel.data:
+            sharing = False
+            share_flashcard_form.username = ''
+        return redirect ('/flashcard')
     #more code about flashcard are put here, this section is for Kim 
     return render_template("flashcard.html", form=form, flashcards=flashcards) #expect the flashcard.html will be render when user navigate to /notes
 
