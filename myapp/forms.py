@@ -122,12 +122,17 @@ class AddFlashcardForm(FlaskForm):
     add = SubmitField ('Add')
     cancel = SubmitField ('Cancel')
 
+class ShareFlashcardForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    submit = SubmitField ('Share')
+
 class AddNoteForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     password = PasswordField('Password')
     body = StringField('Body')
     submit = SubmitField('Create')
     cancel = SubmitField('Cancel')
+
 
 class filterNotesForm(FlaskForm):
     filter = StringField('Search by', validators = [DataRequired()])
