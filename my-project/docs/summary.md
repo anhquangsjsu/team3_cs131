@@ -4,7 +4,7 @@
 
 #### **routes.py**
 ##### Classes:
-* [Timer](#Timer)
+* [Timer](#timer)
     * [\_\_init\_\_()](#__init__)
     * [start()](#start)
     * [reset()](#reset)
@@ -24,29 +24,42 @@
 * [finish_task()](#finish_task)
 * [timer_setting()](#timer_setting)
 * [home()](#home())
+* [flashcard()](#flashcard)
+* [share_flashcard()](#share_flashcard)
+* [next_flashc()](#next_flashc)
+* [prev_flashc()](#prev_flashc)
+* [hide_flash()](#hide_flash)
+* [reveal_flash()](#reveal_flash)
+* [flash_md()](#flash_md)
+
 #### **models.py**
 ##### Model Classes
-* [User](#User)
+* [User](#user)
     * [set_password()](#set_password)
     * [check_password()](#check_password)
-* [Task](#Task)
-* [Flashcard](#Flashcard)
-* [Notes](#Notes)
+* [Task](#task)
+* [Flashcard](#flashcard)
+* [Notes](#notes)
 #### **forms.py**
 ##### Form Classes:
-* [LoginForm](#LoginForm)
-* [TimerForm](#TimerForm)
-* [ChangeTimerForm](#AddTaskForm)
-* [ChangeToTaskAddForm](#ChangeToTaskAddForm)
-* [EditTaskForm](#EditTaskForm)
-* [SignUpForm](#SignUpForm)
-* [TimerSettingForm](#TimerSettingForm)
-* [AddFlashcardForm](#AddFlashcardForm)
-* [AddNoteForm](#AddNoteForm)
-* [filterNotesForm](#filterNotesForm)
+* [LoginForm](#loginform)
+* [TimerForm](#timerform)
+* [ChangeTimerForm](#addtaskform)
+* [ChangeToTaskAddForm](#changetotaskaddform)
+* [EditTaskForm](#edittaskform)
+* [SignUpForm](#signupform)
+* [TimerSettingForm](#timersettingform)
+* [AddFlashcardForm](#addflashcardform)
+* [AddNoteForm](#addnoteform)
+* [filterNotesForm](#filterfotesform)
+* [ShareFlashcardForm](#shareflashcardform)
+* [FlashcardToPDF](#flashcardtopdf)
+* [ControlsBetweenFlashcardInViewForm](#controlsbetweenflashcardinviewform)
+* [RenderMarkdownfileToFlashCardForm](#rendermarkdownfiletoflashcardform)
 ## Details description
 ### **Classes**
 <hr>
+
 ### Timer
 
 ##### Functions
@@ -88,7 +101,7 @@ change the max time of timer and the remaining time
         self (obj)                      a reference to this object instance
         time (int)                      an integer presents amount of time in seconds
         global timerRemain (int)        an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
-
+## **Model classes**
 ### User
 User model, the center of the app, this is where information of the user as well as the app features data are stored
 
@@ -140,8 +153,111 @@ A model present the task added by the user in the timer feature
 ### Notes
 
 ### Flashcard
+A model presents the flashcard added by the user in the flashcard feature
 
+    Relationships with:
+        User        Many-to-One
+    
+    Data Fields:
+        id (int)            unique id integer of the flashcard
+        title (str)         title string of the the flashcard
+        description (str)   description string of the flashcard
+        date_started (Date) a date when the flashcard was added
+        user_id (int)       id of the user who owned the task
+### **Form Classes**
+### LoginForm
+Controling login related feature fields
 
+    Form fields:
+        username (str)      a string field indicate username
+        password (str)      a string field indicate password 
+        remember_me (bool)  a boolean field to indicate if user want to remember the loged in session
+        submit              a submit field when user click Sign in
+        signup              a submit field when user click Sign up
+### TimerForm
+this form class control the timer buttons to start, stop, and reset the timer
+
+    Form fields:
+        start_timer         a submit field when user click Start timer
+        stop_timer          a submit field when user click Stop timer
+        reset_timer         a submit field when user click Reset timer
+### ChangeTimerForm
+this form class will control the toggle between break timer and task timer
+
+    Form fields:
+        task_timer           a submit field when user click Task timer
+        break_timer          a submit field when user click Break timer
+### AddTaskForm
+this form class will control the add task form
+    
+    Form fields:
+        title (str)         a string field indicate title of task
+        note (str)          a string field indicates note of task
+        add_task            a submit field triggered when user hit Add task
+        cancel              a submit field triggered when user hit Cancel
+### ChangeToTaskAddForm
+this form class will toggle the add task form 
+
+    Form fields:
+        submit              a submit field triggered when user click Add new task
+### EditTaskForm
+this form class will control the edit task form, will be toggled when user click Edit
+
+    Form fields:
+        confirm             a submit field triggered when user click Confirm change
+        cancel              a submit field triggered when user click Cancel
+        title (str)         a string field indicates Task title
+        note (str)          a string field indicates Task 's note
+### SignUpForm
+this form class will control the sign up form
+
+    Form fields:
+        username (str)      a string field indicate username
+        password (str)      a string field indicate password
+        email (str)         a string field indicate email     
+        submit              a submit field triggered when user click Add me
+        login              a submit field triggered when user click Take me back  
+### TimerSettingForm
+this form class will control the timer customize or setting form
+
+    Form fields:
+        task_time (int)     an integer field indicate task time amount
+        break_time (int)    an integer field indicate break time amount
+        auto_break (bool)   an boolean field to tell if user want to auto start the break time when the timer finished
+        confirm             a submit field triggered when user click Confirm change
+        cancel              a submit field triggered when user click Cancel
+### AddFlashcardForm
+this form class will control the add flashcard form
+    
+    Form fields:
+        title (str)         a string field indicate title of flashcard
+        descrition (str)    a string field indicates description of flashcard
+        add                 a submit field triggered when user hit Add
+        cancel              a submit field triggered when user hit Cancel
+### ShareFlashcardForm
+this form class will control the share flashcard form
+    
+    Form fields:
+        username (str)      a string field indicate destination username to the flashcard with
+        submit              a submit field triggered when user hit Share
+
+### FlashcardToPDF
+this form class will control the flashcard to PDF form
+    
+    Form fields:
+        submit              a submit field triggered when user hit Output flashcards to PDF file
+### ControlsBetweenFlashcardInViewForm
+this form class will control the next and previous button the flashcard route
+    
+    Form fields:
+        prev              a submit field triggered when user hit Previous
+        next              a submit field triggered when user hit Next
+### RenderMarkdownfileToFlashCardForm
+this form class will control the form that take a fil
+    
+    Form fields:
+        filename(str)   a string field for filename of the markdown file to be converted to flashcards
+        submit          a submit field trigger when user click convert markdown to flashcards
 ### **Functions**
 <hr>
 
@@ -176,7 +292,6 @@ returns the signedup.html to notify user successful sign up and give them option
     Returns:
         a html to notify that user succesfully signed up
 ### notes
-### flashcard
 ### timer
 This function will
 
@@ -242,3 +357,79 @@ renders the home page of the app after the user logged in or sends the user to l
             html to home page if user logged in
         Or
             html to login page otherwise 
+### flashcard
+This function will:
+    1. add new flashcard for the user
+    2. allow user to share a flash card with another user
+    3. allow user to convert markdown file to flashcards 
+    4. allow user to convert flashcards to PDF
+
+This function render flashcards html portion of the app when user navigate to /flashcard route or click flashcard link in the navigation bar at the top
+        
+    Parameters:
+        global sharing(bool)                    a flag telling if the user opened the sharing flashcard form
+        global flashcardsList(List<Flashcard>)  a global flashcards list used for the entire app
+        global currentCard(Flashcard)           a global Flashcard storing the current flashcard so that app can move between the cards in the list with next and previous buttons
+        global currentCardInView(Flashcard)     a global Flashcard storing the current flashcard used in the flashcards_from_md route
+    Returns:
+            redirecting to itself
+        or
+            a template flashcard.html of the page corresponding to the route /flashcard
+        or
+            redirecting to route /flashcards_from_md 
+### share_flashcard
+function trigger when user click sharing a flashcard, will toggle sharing form underneath the corresponding flashcard based on its id when user click Share this flashcard
+
+    Parameters:
+        flashcardid (int):      a flashcard id integer
+        sharing (boolean):      a global variable to indicate if edit form is toggled on
+        sharingID (int):        a global varialbe to keep track the current flashcard to be shared so proper form can be displayed according to task id
+        
+    Returns:
+        redirecting route back to the /flashcard
+### next_flashc
+This function will move to the next flashcard in the list when user click "Next"
+
+    Parameters:
+        global flashcardsList(List<Flashcard>)  a global flashcards list used for the entire app
+        global currentCard(Flashcard)           a global Flashcard storing the current flashcard so that app can move between the cards in the list with next and previous buttons
+    
+    Returns:
+        redirecting to /flashcard route
+### prev_flashc
+This function will move to the previous flashcard in the list when user click "Previous"
+
+    Parameters:
+        global flashcardsList(List<Flashcard>)  a global flashcards list used for the entire app
+        global currentCard(Flashcard)           a global Flashcard storing the current flashcard so that app can move between the cards in the list with next and previous buttons
+    
+    Returns:
+        redirecting to /flashcard route
+### hide_flash
+This function will hide the description of the card when user click "Reveal description"
+
+    Parameters:
+        global revealedCard(bool)       a global boolean variable indicate if the card's description is revealed or not
+    
+    Returns:
+        redirecting to /flashcard route
+### reveal_flash
+This function will reveal the description of the card when user click "Reveal description"
+
+    Parameters:
+        global revealedCard(bool)       a global boolean variable indicate if the card's description is revealed or not
+    
+    Returns:
+        redirecting to /flashcard route
+### flash_md
+This function will return the flashcards_from_md.html when get to route /flashcards_from_md after use hit "Convert markdown to flashcards" 
+
+It will read from the markdown files then convert them to flashcards, and control forms to move between the flashcards
+
+    Parameters:
+        global currentCardInView(Flashcard)     a global Flashcard storing the current flashcard used in the flashcards_from_md route
+        filename(str)                           a string of filename passed via the link in flashcard route
+
+    Returns:
+        redirecting back to the current route
+
