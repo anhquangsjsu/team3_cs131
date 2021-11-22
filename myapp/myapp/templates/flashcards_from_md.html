@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unfogettable</title>
+</head>
+<body>
+    <h3>Flashcards viewer</h3>
+    <div class="flashcards">
+        {% if card %}
+        <h3>{{card.title}}</h3>
+        <p>{{card.description}}</p>
+        {% endif %}
+    </div>
+    <div class="flashcards_controller">
+        <form method="POST" novalidate>
+            {{form.hidden_tag()}}
+            <p>{{form.prev()}} {{form.next()}}</p>
+        </form>
+    </div>
+    <a href="/flashcard">Back to app</a>
+</body>
+</html>

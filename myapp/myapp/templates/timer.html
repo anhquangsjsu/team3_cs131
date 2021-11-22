@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My pomodoro timer</h2>
+<div id="timer-container">
+    <div id='timer_changer'>
+        <form method='POST' novalidate>
+            {{timer_change_form.hidden_tag()}}
+            <p>Change timer to {{timer_change_form.task_timer()}} {{timer_change_form.break_timer()}}</p>
+        </form>
+    </div>
+    <hr>
+    <b>{{timer_message}}</b>
+    <div id="timer_display">
+        {{timer_type}}: <span id="time_text" data-time='{{timerRemain}}'></span>
+    </div>
+    <form method='POST' action="" novalidate>
+        {{ timer_form.hidden_tag() }}
+        <p>{{timer_form.start_timer()}} {{timer_form.stop_timer()}} {{timer_form.reset_timer()}}</p>
+    </form>
+    <div>
+        {% if current_task %}
+        <h5>Current task: {{current_task.title}}</h5>
+        <a href="/finish_task/{{current_task.id}}">Finish current task</a>
+        {% endif %}
+    </div>
+</div>
+<hr>
+<div id="task-container">
+    {% if tasks %}
+        <h4>Task lists:</h4>
+        {% for t in tasks %}
+            <div>
+                <span title='{{t.note}}' class='task_title'>{{t.id}}. {{t.title}}</span> 
+            
+            {% if (t.id == editid) and (editing == True) %}
+            <form method='POST' novalidate>
+                {{edit_task_form.csrf_token}}
+                <p>{{edit_task_form.title.label}} {{edit_task_form.title()}}</p>
+                <p>{{edit_task_form.note.label}} {{edit_task_form.note()}}</p>
+                <p>{{edit_task_form.confirm()}} {{edit_task_form.cancel()}}</p>
+            </form>
+            {% else %}
+            <div class='control_task_group'>
+                <a href='/edit_task/{{t.id}}'>Edit</a> <a href="/delete_task/{{t.id}}">Delete</a>
+            </div>    
+            {% endif %}
+            </div>
+
+        {% endfor %}
+    {% else %}
+    <p>No tasks added yet</p>
+    {% endif %}
+    
+    {% if adding %}
+    <form method='POST' novalidate>
+        {{ add_task_form.csrf_token }}
+            <p>{{add_task_form.title.label}}: {{add_task_form.title()}}</p>
+            <p>{{add_task_form.note.label}}: {{add_task_form.note()}}</p>
+            <p>{{add_task_form.add_task()}} {{add_task_form.cancel()}}</p>
+    </form>
+    {% else %}
+    <form method='POST' novalidate>
+    {{change_to_add.hidden_tag()}}
+        <p>{{change_to_add.submit()}}</p>
+    </form>
+    {% endif %}
+</div>
+<hr>
+{% if not timer_setting %}
+<a style="font-size: 1.5em;" href="/timer_setting">Customize your timer</a>
+{% else %}
+<div id="setting-container">
+    <form method='POST' novalidate>
+    {{ timer_setting_form.hidden_tag() }}
+        <p>{{timer_setting_form.task_time.label}}  {{timer_setting_form.task_time()}}</p>
+        <p>{{timer_setting_form.break_time.label}}  {{timer_setting_form.break_time()}}</p>
+        <p>{{timer_setting_form.auto_break.label}}  {{timer_setting_form.auto_break()}}</p>
+        <p>{{timer_setting_form.confirm()}} {{timer_setting_form.cancel()}}</p>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

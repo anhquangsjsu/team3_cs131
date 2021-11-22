@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unforgettable App</title>
+</head>
+<body>
+    <div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/notes">Todo list</a>
+            <a href="/flashcard">Flash card</a>
+            <a href="/timer">Todotimer</a>
+        </nav>
+        {% if username %}
+        <div>
+            <b>Hello {{username}}</b>
+            <a href="/logout">Logout</a>
+        </div>
+        {% endif %}
+    </div>
+    {% block content %}
+    {% endblock %}
+<script>
+    //Getting the UIs 
+    let start_timer_btn = document.getElementById("start_timer");
+    let timer_text = document.getElementById("time_text");
+    //retrieve time form the UI
+    let time_data = timer_text.getAttribute('data-time')
+    //Formating the time digits
+    let seconds = time_data % 60;
+    if (seconds < 10) seconds = 0 + "" + seconds;
+    let minutes = Math.floor(time_data / 60);
+    if (minutes < 10) minutes = 0 + "" + minutes;
+    timer_text.innerText = minutes + " : " + seconds;
+    //when user click start time, update timer display every 1 second
+    start_timer_btn.addEventListener("click",function(){
+        setInterval(function(){
+                        time_data -= 1;
+                        let seconds = time_data % 60;
+                        if (seconds < 10) seconds = 0 + "" + seconds;
+                        let minutes = Math.floor(time_data / 60);
+                        if (minutes < 10) minutes = 0 + "" + minutes;
+                        timer_text.innerText = minutes + " : " + seconds;
+                    }, 1000) 
+    })
+</script>
+</body>
+</html>
