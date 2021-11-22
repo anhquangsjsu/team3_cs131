@@ -114,7 +114,7 @@ class Notes(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     password = db.Column(db.String(128))
-    title = db.Column(db.String(32), unique = True)
+    title = db.Column(db.String(32))
     def repr(self):
         return f'<Post {self.title}: {self.body}>'
 

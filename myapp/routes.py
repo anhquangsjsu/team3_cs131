@@ -252,13 +252,16 @@ def notes():
                 n = Notes(title = addnoteform.title.data, body = addnoteform.body.data, password = addnoteform.password.data)
                 db.session.add(n)
                 db.session.commit()
-                flash(f'The note {form.title.data} has been added')
+                flash(f'The note {addnoteform.title.data} has been added')
                 return redirect("/notes")
             else:
                 flash("Your note needs a title in order to be created")
                 return redirect("/notes")
     return render_template("notes.html", form = addnoteform, form2 = filterform, all_notes = nots) #expect the notes.htm  l will be render when user navigate to /notes
 
+"""@myapp_obj.route("/open_note/<string:id>/")
+def getNote(id):
+"""
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
 def flashcard():
