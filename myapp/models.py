@@ -42,7 +42,7 @@ class User(UserMixin, db.Model):
 				  backref = 'user', 
 				  lazy = 'dynamic',
 				  cascade = 'all, delete, delete-orphan' )
-    notes = db.relationship('Notes', backref='author', lazy='dynamic', cascade = 'all, delete, delete-orphan')
+    notes = db.relationship('Notes', backref='user', lazy='dynamic', cascade = 'all, delete, delete-orphan')
 
     def set_password(self, password):
         '''

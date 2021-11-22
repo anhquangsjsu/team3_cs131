@@ -226,14 +226,15 @@ def notes():
     #more code about notes are put here, this section is for Jason
     global filterList
     global filtered
+    nots = []
     addnoteform = AddNoteForm()
     filterform = filterNotesForm()
     u = User.query.filter_by(username = current_user.username).first()
-    if u != None:
+    if u != None and u.notes != None: 
         if filtered: 
-            notes = filteredList
+            nots = filteredList
         else:
-            notes = u.notes.all()
+            nots = u.notes.all()
         
 
     if filterform.validate_on_submit():
@@ -256,7 +257,7 @@ def notes():
             else:
                 flash("Your note needs a title in order to be created")
                 return redirect("/notes")
-    return render_template("notes.html", form = addnoteform, form2 = filterform, all_notes = notes) #expect the notes.htm  l will be render when user navigate to /notes
+    return render_template("notes.html", form = addnoteform, form2 = filterform, all_notes = nots) #expect the notes.htm  l will be render when user navigate to /notes
 
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
@@ -282,7 +283,7 @@ def flashcard():
     if share_flashcard_form.validate_on_submit() and adding:
         #share is clicked
         if share_flashcard_form.share_flashcard.data:
-            f = Flashcard(username = share_flashcard_form.username.data, finished = False, date_shared = date.today()))
+            f = Flashcard(username = share_flashcard_form.username.data, finished = False, date_shared = date.today())
             u = User.query.filter_by(username = current_user)
             if u != None:
                 if share_flashcard_form.username.data !='':
