@@ -145,14 +145,29 @@ class ShareFlashcardForm(FlaskForm):
     cancel = SubmitField('Cancel')
 
 class AddNoteForm(FlaskForm):
+    '''
+    This class will allow the user to add a new note
+
+        Form fields:
+            title (str)         a string indicate of title
+            password (str)      a string field indicate password
+            body (str)          a string field indicate body of text
+            submit              a submit field when user click Create
+    '''
     title = StringField('Title', validators=[DataRequired()])
     password = PasswordField('Password')
     body = StringField('Body')
     submit = SubmitField('Create')
-    cancel = SubmitField('Cancel')
 
 
 class filterNotesForm(FlaskForm):
+    '''
+    This class will allow the user to filter their list of notes
+
+        Form fields:
+            filter (str)        a string indicate of desired filter
+            submit              a submit field when user click Search
+    '''
     filter = StringField('Search by', validators = [DataRequired()])
     submit = SubmitField('Search')
 

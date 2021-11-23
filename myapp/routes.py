@@ -228,6 +228,20 @@ def signedup(user):
 #Notes features
 @myapp_obj.route("/notes", methods=["GET", "POST"])
 def notes():
+    '''
+    This function render notes html portion of the app when user navigate to /notes route or click notes l>    This function will:
+        1. add new notes for the user
+        2. allow user to view all of their notes
+        3. allow user to search for notes by keywords
+
+        Parameters:
+            global filtered(bool)                   a flag telling if the user has prompted for a filtered list of the notes
+            global filterList(List<Notes>)  a global notes list used to store a list of filtered notes
+        Returns:
+                redirecting to itself
+            or
+                a template notes.html of the page corresponding to the route /notes
+    '''
     #more code about notes are put here, this section is for Jason
     global filterList
     global filtered

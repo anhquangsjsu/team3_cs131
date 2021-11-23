@@ -122,19 +122,47 @@ class Flashcard(db.Model):
 """
 
 class Notes(db.Model):
+    '''
+    Notes model, where users can create and store within their account
+        Relationships with:
+            User        Many-to-One
+
+        Data Fields:
+            id (int)                integer indicate id of note
+            body (str)              string indicate body of text
+            timstamp (datetime)     datetime indicate creation time
+            user_id (int)           integer indicate of user ownership
+            password (str)          string indicate password
+            title (str)             string indicate of note title
+    '''
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(256))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     password = db.Column(db.String(128))
     title = db.Column(db.String(32))
-    def repr(self):
-        return f'<Post {self.title}: {self.body}>'
 
     def set_password(self, password):
+        '''
+        This function will help set password for the note using hash function
+
+            Parameters:
+                self (obj)          reference to this class instance
+                password (string)   a string containing password
+        '''
         self.password = generate_password_hash(password)
 
     def check_password(self, password):
+        '''
+        this function will check the password using hash function, return a boolean
+
+            Parameters:
+                self (obj)          reference to this class instance
+                password (string)   a string containing password
+
+            Returns:
+                a boolean indicate if the password matches
+        '''
         return check_password_hash(self.password, password)
 
 @login.user_loader
