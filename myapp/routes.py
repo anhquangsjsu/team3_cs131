@@ -249,7 +249,7 @@ def notes():
     addnoteform = AddNoteForm()
     filterform = filterNotesForm()
     u = User.query.filter_by(username = current_user.username).first()
-    if u != None and u.notes != None: 
+    if u != None: 
         if filtered: 
             nots = filteredList
         else:
@@ -278,9 +278,18 @@ def notes():
                 return redirect("/notes")
     return render_template("notes.html", form = addnoteform, form2 = filterform, all_notes = nots) #expect the notes.htm  l will be render when user navigate to /notes
 
-"""@myapp_obj.route("/open_note/<string:id>/")
-def getNote(id):
-"""
+@myapp_obj.route("/open_note/<string:noteid>")
+def getNote(noteid):
+    """
+    This function will render open_note.html and pass the desired note into it
+    This function will:
+        1. display a note
+    returns:
+        a template open_note, displaying the desired note
+    """
+    n = Notes.query.filter_by(id = noteid).first()
+    return_template("open_note.html", aNote = n) 
+
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
 def flashcard():
