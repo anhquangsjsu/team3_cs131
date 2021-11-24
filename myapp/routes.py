@@ -251,16 +251,16 @@ def notes():
     u = User.query.filter_by(username = current_user.username).first()
     if u != None: 
         if filtered: 
-            nots = filteredList
+            nots = filterList
         else:
             nots = u.notes.all()
         
 
     if filterform.validate_on_submit():
-        if filterform.key.data != "":
+        if filterform.filter.data != "":
             filtered = True
             filterList.clear()
-            for n in notes:
+            for n in nots:
                 if filterform.filter.data in n.title:
                     filterList.append(n)
 
@@ -268,7 +268,7 @@ def notes():
     if addnoteform.validate_on_submit():
         if addnoteform.submit.data:
             if addnoteform.title.data != "":
-                n = Notes(title = addnoteform.title.data, body = addnoteform.body.data, password = addnoteform.password.data)
+                n = Notes(user_id = u.id, title = addnoteform.title.data, body = addnoteform.body.data, password = addnoteform.password.data)
                 db.session.add(n)
                 db.session.commit()
                 flash(f'The note {addnoteform.title.data} has been added')
@@ -288,7 +288,7 @@ def getNote(noteid):
         a template open_note, displaying the desired note
     """
     n = Notes.query.filter_by(id = noteid).first()
-    return_template("open_note.html", aNote = n) 
+    return render_template("open_note.html", aNote = n) 
 
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])

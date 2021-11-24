@@ -1,16 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<body>
-    <div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/notes">Todo list</a>
-            <a href="/flashcard">Flash card</a>
-            <a href="/timer">Todotimer</a>
-        </nav>
-    </div>
-</body>
 <h1>{{aNote.title}}</h1>
-<p>{{ANote.body}}</p>
+<p>{{aNote.body}}</p>
 {% endblock %}
