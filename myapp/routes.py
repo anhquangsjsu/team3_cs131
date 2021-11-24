@@ -252,6 +252,7 @@ def notes():
     if u != None: 
         if filtered: 
             nots = filterList
+            filtered = False
         else:
             nots = u.notes.all()
         
