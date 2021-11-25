@@ -17,6 +17,7 @@
 * [signup()](#signup)
 * [signedup()](#signedup)
 * [notes()](#notes)
+* [getNote()](#getnote)
 * [flashcard()](#flashcard)
 * [timer()](#timer)
 * [edit_task()](#edit_task)
@@ -40,6 +41,8 @@
 * [Task](#task)
 * [Flashcard](#flashcard)
 * [Notes](#notes)
+    * [set_password()](#notes_set_password)
+    * [check_password()](#notes_check_password)
 #### **forms.py**
 ##### Form Classes:
 * [LoginForm](#loginform)
@@ -51,7 +54,7 @@
 * [TimerSettingForm](#timersettingform)
 * [AddFlashcardForm](#addflashcardform)
 * [AddNoteForm](#addnoteform)
-* [filterNotesForm](#filterfotesform)
+* [filterNotesForm](#filternotesform)
 * [ShareFlashcardForm](#shareflashcardform)
 * [FlashcardToPDF](#flashcardtopdf)
 * [ControlsBetweenFlashcardInViewForm](#controlsbetweenflashcardinviewform)
@@ -151,7 +154,33 @@ A model present the task added by the user in the timer feature
         date_ended (Date)   a date when the task is finished
         user_id (int)       id of the user who owned the task
 ### Notes
+Notes model, where users can create and store within their account
+    Relationships with:
+        User        Many-to-One
 
+    Data Fields:
+        id (int)                integer indicate id of note
+        body (str)              string indicate body of text
+        timstamp (datetime)     datetime indicate creation time
+        user_id (int)           integer indicate of user ownership
+        password (str)          string indicate password
+        title (str)             string indicate of note title
+#### Functions
+##### Notes_set_password
+This function will help set password for the note using hash function
+
+    Parameters:
+        self (obj)          reference to this class instance
+        password (string)   a string containing password
+##### Notes_check_password
+this function will check the password using hash function, return a boolean
+
+    Parameters:
+        self (obj)          reference to this class instance
+        password (string)   a string containing password
+
+    Returns:
+        a boolean indicate if the password matches
 ### Flashcard
 A model presents the flashcard added by the user in the flashcard feature
 
@@ -258,6 +287,20 @@ this form class will control the form that take a fil
     Form fields:
         filename(str)   a string field for filename of the markdown file to be converted to flashcards
         submit          a submit field trigger when user click convert markdown to flashcards
+### AddNoteForm
+This class will allow the user to add a new note
+
+    Form fields:
+        title (str)         a string indicate of title
+        password (str)      a string field indicate password
+        body (str)          a string field indicate body of text
+        submit              a submit field when user click Create
+### filterNotesForm
+This class will allow the user to filter their list of notes
+
+    Form fields:
+        filter (str)        a string indicate of desired filter
+        submit              a submit field when user click Search
 ### **Functions**
 <hr>
 
@@ -292,6 +335,29 @@ returns the signedup.html to notify user successful sign up and give them option
     Returns:
         a html to notify that user succesfully signed up
 ### notes
+This function will:
+
+1. add new notes for the user
+2. allow user to view all of their notes
+3. allow user to search for notes by keywords
+
+This function render notes html portion of the app when user navigate to /notes route or click notes l>
+
+    Parameters:
+        global filtered(bool)                   a flag telling if the user has prompted for a filtered list of the notes
+        global filterList(List<Notes>)  a global notes list used to store a list of filtered notes
+    Returns:
+            redirecting to itself
+        or
+            a template notes.html of the page corresponding to the route /notes
+### getNote
+This function will render open_note.html and pass the desired note into it. The end result is that it will display a note
+
+    Parameters:
+        noteid (int)        integer indicate id of a note
+
+    Returns:
+        a template open_note, displaying the desired note
 ### timer
 This function will
 
@@ -359,10 +425,11 @@ renders the home page of the app after the user logged in or sends the user to l
             html to login page otherwise 
 ### flashcard
 This function will:
-    1. add new flashcard for the user
-    2. allow user to share a flash card with another user
-    3. allow user to convert markdown file to flashcards 
-    4. allow user to convert flashcards to PDF
+
+1. add new flashcard for the user
+2. allow user to share a flash card with another user
+3. allow user to convert markdown file to flashcards 
+4. allow user to convert flashcards to PDF
 
 This function render flashcards html portion of the app when user navigate to /flashcard route or click flashcard link in the navigation bar at the top
         

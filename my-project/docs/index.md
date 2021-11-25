@@ -35,6 +35,7 @@
             home.html                   # user will be send to here after loged in
             login.html                  # where user will login and sign up account
             notes.html                  # notes page of the app
+            open_note.html              # page link to a note when user choose to display a note from a list
             signedup.html               # Page notify if user successfully signed up 
             signup.html                 # Page for user to sign up
             timer.html                  # timer feature page of the app

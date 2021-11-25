@@ -282,11 +282,13 @@ def notes():
 @myapp_obj.route("/open_note/<string:noteid>")
 def getNote(noteid):
     """
-    This function will render open_note.html and pass the desired note into it
-    This function will:
-        1. display a note
-    returns:
-        a template open_note, displaying the desired note
+    This function will render open_note.html and pass the desired note into it. The end result is that it will display a note
+    
+        Parameters:
+            noteid (int)        integer indicate id of a note
+
+        Returns:
+            a template open_note, displaying the desired note
     """
     n = Notes.query.filter_by(id = noteid).first()
     return render_template("open_note.html", aNote = n) 
