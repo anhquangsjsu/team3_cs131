@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{aNote.title}}</h1>
-<p>{{aNote.body}}</p>
+{% if show == True %}
+
+    <form method = "Post" novalidate>
+        {{form.hidden_tag()}}
+        <p> {{form.pword.label}} <br> {{form.pword(size = 28)}}</p>
+        <p>{{form.submit()}}</p>
+    </form>
+{% endif %}
+
+{% if show == False %}
+    <h1>
+        {% if aNote %}
+            {{aNote.title}}
+        {% endif %}
+    </h1>
+    <p>
+        {% if aNote %}
+            {{aNote.body}}
+        {% endif %}
+    </p>
+{% endif %}
 {% endblock %}

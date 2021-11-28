@@ -1,6 +1,6 @@
 from myapp import myapp_obj
 import pdfkit
-from myapp.forms import RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import send_from_directory, request, render_template, flash, redirect
 from datetime import date
 import time
@@ -31,6 +31,7 @@ flashcardsList = []
 currentCard = None
 currentCardInView = None
     #Notes global variables
+locked = True
 filtered = False
 filterList = []
 #helper functions
@@ -279,7 +280,7 @@ def notes():
                 return redirect("/notes")
     return render_template("notes.html", form = addnoteform, form2 = filterform, all_notes = nots) #expect the notes.htm  l will be render when user navigate to /notes
 
-@myapp_obj.route("/open_note/<string:noteid>")
+@myapp_obj.route("/open_note/<string:noteid>", methods = ["GET", "POST"])
 def getNote(noteid):
     """
     This function will render open_note.html and pass the desired note into it. The end result is that it will display a note
@@ -290,8 +291,19 @@ def getNote(noteid):
         Returns:
             a template open_note, displaying the desired note
     """
+    global locked
     n = Notes.query.filter_by(id = noteid).first()
-    return render_template("open_note.html", aNote = n) 
+    form1 = lockedNoteForm()
+    if form1.validate_on_submit():
+            if n.check_password(form1.pword.data) == True:
+                locked = False
+                redirect("/open_note/{{n.id}}")
+            else:
+                flash("wrong password")
+                redirect('/open_note/{{n.id}}')
+    return render_template("open_note.html", aNote = n, form = form1, show = locked)
+
+    
 
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
