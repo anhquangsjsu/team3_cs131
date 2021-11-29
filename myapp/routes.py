@@ -291,6 +291,7 @@ def getNote(noteid):
     
         Parameters:
             noteid (int)        integer indicate id of a note
+            global locked       a global boolean flag indicate if the note is locked or not
 
         Returns:
             a template open_note, displaying the desired note

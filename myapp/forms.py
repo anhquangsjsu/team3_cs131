@@ -160,6 +160,13 @@ class AddNoteForm(FlaskForm):
     submit = SubmitField('Create')
 
 class lockedNoteForm(FlaskForm):
+    '''
+    This class will control the lock of the note
+
+        Form fields:
+            pword(str)          a string indicate password of the note
+            submit              a submit field when use click "Submit"
+    '''
     pword = StringField('Enter password for the note', validators=[DataRequired()])
     submit = SubmitField("Submit")
 

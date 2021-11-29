@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Unforgettable Documentation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">Unforgettable Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem active">
+                                <a href="." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="summary/" class="nav-link">Summary</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" class="nav-link disabled">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="summary/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#welcome-to-unforgettable-documentation" class="nav-link">Welcome to Unforgettable documentation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#how-to-run-the-app" class="nav-link">How to run the app</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#dependencies" class="nav-link">Dependencies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#project-layout" class="nav-link">Project layout</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="welcome-to-unforgettable-documentation">Welcome to Unforgettable documentation</h1>
+<h2 id="how-to-run-the-app">How to run the app</h2>
+<ol>
+<li>Clone the project from git repo at <a href="https://github.com/anhquangsjsu/team3_cs131">Github</a>.</li>
+<li>From ubuntu terminal, run command <code>pip install pdfkit</code></li>
+<li>then run command <code>sudo apt-get install wkhtmltopdf</code></li>
+<li>From team3_cs131 folder, run the command  <code>python3 run.py</code></li>
+<li>The login page will appear, either login using your own account or create account by signup</li>
+<li>When signed in, user will be able to use the 3 services offered by Unforgettable: <ul>
+<li>Flash cards to study terms</li>
+<li>Notes to memorize important information</li>
+<li>Pomodoro timer to help focus in doing tasks </li>
+</ul>
+</li>
+</ol>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>pdfkit</li>
+<li>wkhtmltopdf</li>
+</ul>
+<h2 id="project-layout">Project layout</h2>
+<pre><code>README.md               # a read me file, some instruction is listed there
+Specification.md        # markdown file store the usecase descriptions and 
+requirements of the project
+run.py                  # to run the app
+myflashcards.pdf        # the output file after user convert their flashcards to PDF
+gantt.xlsx              # excel file containing the gantt chart of the team
+myapp/                  # my app 
+    __init.py__         # initialization code.
+    app.db              # database for the app
+    forms.py            # forms container
+    models.py           # table definition for the database
+    routes.py           # route to navigate through the app
+    template/               #place to store the html templates
+        flashcards_from_md.html     # Page to display flashcards after user input a markdown file
+        base.html                   # starting page for other pages to extend
+        flashcard.html              # flashcard page of the app
+        home.html                   # user will be send to here after loged in
+        login.html                  # where user will login and sign up account
+        notes.html                  # notes page of the app
+        open_note.html              # page link to a note when user choose to display a note from a list
+        signedup.html               # Page notify if user successfully signed up 
+        signup.html                 # Page for user to sign up
+        timer.html                  # timer feature page of the app
+    mdfiles/                #place to store the testing markdown files used to convert to flashcards
+        test.md                     # a test file to be converted from .md to flashcards
+        test2.md                    # a test file to be converted from .md to flashcards
+my-project/             # the mkdocs files resigned here
+    mkdocs.yml          # mkdocts configurations are here
+    docs/                   # the pages of the documentation website
+        index.md                    # the home page
+        summary.md                  # the summary page
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.2.3
+Build Date UTC : 2021-11-29 05:03:49.845755+00:00
+-->

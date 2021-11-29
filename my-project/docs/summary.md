@@ -54,6 +54,7 @@
 * [TimerSettingForm](#timersettingform)
 * [AddFlashcardForm](#addflashcardform)
 * [AddNoteForm](#addnoteform)
+* [lockedNoteForm](#lockednoteform)
 * [filterNotesForm](#filternotesform)
 * [ShareFlashcardForm](#shareflashcardform)
 * [FlashcardToPDF](#flashcardtopdf)
@@ -295,6 +296,12 @@ This class will allow the user to add a new note
         password (str)      a string field indicate password
         body (str)          a string field indicate body of text
         submit              a submit field when user click Create
+### lockedNoteForm
+This class will control the lock of the note
+
+        Form fields:
+            pword(str)          a string indicate password of the note
+            submit              a submit field when use click "Submit"
 ### filterNotesForm
 This class will allow the user to filter their list of notes
 
@@ -355,7 +362,8 @@ This function will render open_note.html and pass the desired note into it. The 
 
     Parameters:
         noteid (int)        integer indicate id of a note
-
+        global locked       a global boolean flag indicate if the note is locked or not
+        
     Returns:
         a template open_note, displaying the desired note
 ### timer

@@ -22,6 +22,7 @@
     requirements of the project
     run.py                  # to run the app
     myflashcards.pdf        # the output file after user convert their flashcards to PDF
+    gantt.xlsx              # excel file containing the gantt chart of the team
     myapp/                  # my app 
         __init.py__         # initialization code.
         app.db              # database for the app

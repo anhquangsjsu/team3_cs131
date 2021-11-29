@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Summary - Unforgettable Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Unforgettable Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Summary</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#summary-of-classes-and-functions" class="nav-link">Summary of classes and functions</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#lists-of-classes-and-functions" class="nav-link">Lists of classes and functions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#details-description" class="nav-link">Details description</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#model-classes_1" class="nav-link">Model classes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="summary-of-classes-and-functions">Summary of classes and functions</h1>
+<h2 id="lists-of-classes-and-functions">Lists of classes and functions</h2>
+<h4 id="routespy"><strong>routes.py</strong></h4>
+<h5 id="classes">Classes:</h5>
+<ul>
+<li><a href="#timer">Timer</a><ul>
+<li><a href="#__init__">__init__()</a></li>
+<li><a href="#start">start()</a></li>
+<li><a href="#reset">reset()</a></li>
+<li><a href="#stop">stop()</a></li>
+<li><a href="#change_time">change_time()</a></li>
+</ul>
+</li>
+</ul>
+<h5 id="functions">Functions:</h5>
+<ul>
+<li><a href="#log">log()</a></li>
+<li><a href="#logout">logout()</a></li>
+<li><a href="#login">login()</a></li>
+<li><a href="#signup">signup()</a></li>
+<li><a href="#signedup">signedup()</a></li>
+<li><a href="#notes">notes()</a></li>
+<li><a href="#getnote">getNote()</a></li>
+<li><a href="#flashcard">flashcard()</a></li>
+<li><a href="#timer">timer()</a></li>
+<li><a href="#edit_task">edit_task()</a></li>
+<li><a href="#delete_task">delete_task()</a></li>
+<li><a href="#finish_task">finish_task()</a></li>
+<li><a href="#timer_setting">timer_setting()</a></li>
+<li><a href="#home()">home()</a></li>
+<li><a href="#flashcard">flashcard()</a></li>
+<li><a href="#share_flashcard">share_flashcard()</a></li>
+<li><a href="#next_flashc">next_flashc()</a></li>
+<li><a href="#prev_flashc">prev_flashc()</a></li>
+<li><a href="#hide_flash">hide_flash()</a></li>
+<li><a href="#reveal_flash">reveal_flash()</a></li>
+<li><a href="#flash_md">flash_md()</a></li>
+</ul>
+<h4 id="modelspy"><strong>models.py</strong></h4>
+<h5 id="model-classes">Model Classes</h5>
+<ul>
+<li><a href="#user">User</a><ul>
+<li><a href="#set_password">set_password()</a></li>
+<li><a href="#check_password">check_password()</a></li>
+</ul>
+</li>
+<li><a href="#task">Task</a></li>
+<li><a href="#flashcard">Flashcard</a></li>
+<li><a href="#notes">Notes</a><ul>
+<li><a href="#notes_set_password">set_password()</a></li>
+<li><a href="#notes_check_password">check_password()</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="formspy"><strong>forms.py</strong></h4>
+<h5 id="form-classes">Form Classes:</h5>
+<ul>
+<li><a href="#loginform">LoginForm</a></li>
+<li><a href="#timerform">TimerForm</a></li>
+<li><a href="#addtaskform">ChangeTimerForm</a></li>
+<li><a href="#changetotaskaddform">ChangeToTaskAddForm</a></li>
+<li><a href="#edittaskform">EditTaskForm</a></li>
+<li><a href="#signupform">SignUpForm</a></li>
+<li><a href="#timersettingform">TimerSettingForm</a></li>
+<li><a href="#addflashcardform">AddFlashcardForm</a></li>
+<li><a href="#addnoteform">AddNoteForm</a></li>
+<li><a href="#lockednoteform">lockedNoteForm</a></li>
+<li><a href="#filternotesform">filterNotesForm</a></li>
+<li><a href="#shareflashcardform">ShareFlashcardForm</a></li>
+<li><a href="#flashcardtopdf">FlashcardToPDF</a></li>
+<li><a href="#controlsbetweenflashcardinviewform">ControlsBetweenFlashcardInViewForm</a></li>
+<li><a href="#rendermarkdownfiletoflashcardform">RenderMarkdownfileToFlashCardForm</a></li>
+</ul>
+<h2 id="details-description">Details description</h2>
+<h3 id="classes_1"><strong>Classes</strong></h3>
+<hr>
+
+<h3 id="timer">Timer</h3>
+<h5 id="functions_1">Functions</h5>
+<h5 id="__init__">__init__</h5>
+<p>The constructor, take in self and a time amount in seconds, will initialize the instance's max</p>
+<pre><code>Parameters:
+    self (obj) refererence to the obj instance
+    m (int)    max amount of time set for the timer
+</code></pre>
+<h5 id="start">start</h5>
+<p>The functions will start the timer and countdown every 1 second, when timer reached 0, notify the user that timer is stopped, and switch to break timer if the user has the auto break setting on</p>
+<pre><code>Parameters:
+    self (obj)                  a reference to this object instance
+    global autoBreak (bool)     a boolean that keep track of user's auto entering break timer setting when finished the timer     
+    global timerStopped(bool)   a boolean to indicate when the timer is stopped, used to stop the while loop
+    global timerRemain (int)    an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+    global timerType (str)      a string indicates which type of timer is chosen from the change timer form
+    global timerMessage (str)   a string stored message regarding the timer
+</code></pre>
+<h5 id="reset">reset</h5>
+<p>reset the timer countdown to max time</p>
+<pre><code>Parameters:
+    self (obj)                  a reference to this object instance
+    global timerRemain (int)    an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+</code></pre>
+<h5 id="stop">stop</h5>
+<p>stops the timer by signaling with timerStopped flag and notifies the user with a message</p>
+<pre><code>Parameters:
+    self (obj)                  a reference to this object instance
+    global timerStopped(bool)   a boolean to indicate when the timer is stopped, used to stop the while loop
+    global timerType (str)      a string indicates which type of timer is chosen from the change timer form
+    global timerMessage (str)   a string stored message regarding the timer
+</code></pre>
+<h5 id="change_time">change_time</h5>
+<p>change the max time of timer and the remaining time</p>
+<pre><code>Parameters:
+    self (obj)                      a reference to this object instance
+    time (int)                      an integer presents amount of time in seconds
+    global timerRemain (int)        an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+</code></pre>
+<h2 id="model-classes_1"><strong>Model classes</strong></h2>
+<h3 id="user">User</h3>
+<p>User model, the center of the app, this is where information of the user as well as the app features data are stored</p>
+<pre><code>Relationships with:
+    Task        One-to-Many
+    Note        One-to-Many
+    Flashcard   One-to-Many
+
+Data Fields:
+    id (int)                integer indicate id of user
+    username (str)          string indicate username
+    password (str)          string indicate password
+    email   (str)           string indicate email
+    task_timer (int)        integer indicate user task timer setting
+    break_timer (int)       integer indicate user break timer setting
+    tasks   (List&lt;obj&gt;)     list of object containing tasks added by the user, used in the timer feature, connected the User with the Task model class
+    flashcards (List&lt;obj&gt;)  list of object containing flashcards added by the user, used in the flash card feature, connected the User with the Flashcard model class 
+    notes (List&lt;obj&gt;)       list of object containing notes added by the user, used in the notes feature, connected the User with the Note model class
+</code></pre>
+<h5 id="functions_2">Functions</h5>
+<h5 id="set_password">set_password</h5>
+<p>This function will help set password for user using hash function</p>
+<pre><code>Parameters:
+    self (obj)          reference to this class instance
+    password (string)   a string containing password
+</code></pre>
+<h5 id="check_password">check_password</h5>
+<p>this function will check the password using hash function, return a boolean</p>
+<pre><code>Parameters:
+    self (obj)          reference to this class instance
+    password (string)   a string containing password
+
+Returns:
+    a boolean indicate if the password matches
+</code></pre>
+<h3 id="task">Task</h3>
+<p>A model present the task added by the user in the timer feature</p>
+<pre><code>Relationships with:
+    User        Many-to-One
+
+Data Fields:
+    id (int)            unique id integer of the task
+    title (str)         title string of the the task
+    note (str)          note string of the task
+    finished (bool)     finished flag boolean of the the task
+    date_started (Date) a date when the task started
+    date_ended (Date)   a date when the task is finished
+    user_id (int)       id of the user who owned the task
+</code></pre>
+<h3 id="notes">Notes</h3>
+<p>Notes model, where users can create and store within their account
+    Relationships with:
+        User        Many-to-One</p>
+<pre><code>Data Fields:
+    id (int)                integer indicate id of note
+    body (str)              string indicate body of text
+    timstamp (datetime)     datetime indicate creation time
+    user_id (int)           integer indicate of user ownership
+    password (str)          string indicate password
+    title (str)             string indicate of note title
+</code></pre>
+<h4 id="functions_3">Functions</h4>
+<h5 id="notes_set_password">Notes_set_password</h5>
+<p>This function will help set password for the note using hash function</p>
+<pre><code>Parameters:
+    self (obj)          reference to this class instance
+    password (string)   a string containing password
+</code></pre>
+<h5 id="notes_check_password">Notes_check_password</h5>
+<p>this function will check the password using hash function, return a boolean</p>
+<pre><code>Parameters:
+    self (obj)          reference to this class instance
+    password (string)   a string containing password
+
+Returns:
+    a boolean indicate if the password matches
+</code></pre>
+<h3 id="flashcard">Flashcard</h3>
+<p>A model presents the flashcard added by the user in the flashcard feature</p>
+<pre><code>Relationships with:
+    User        Many-to-One
+
+Data Fields:
+    id (int)            unique id integer of the flashcard
+    title (str)         title string of the the flashcard
+    description (str)   description string of the flashcard
+    date_started (Date) a date when the flashcard was added
+    user_id (int)       id of the user who owned the task
+</code></pre>
+<h3 id="form-classes_1"><strong>Form Classes</strong></h3>
+<h3 id="loginform">LoginForm</h3>
+<p>Controling login related feature fields</p>
+<pre><code>Form fields:
+    username (str)      a string field indicate username
+    password (str)      a string field indicate password 
+    remember_me (bool)  a boolean field to indicate if user want to remember the loged in session
+    submit              a submit field when user click Sign in
+    signup              a submit field when user click Sign up
+</code></pre>
+<h3 id="timerform">TimerForm</h3>
+<p>this form class control the timer buttons to start, stop, and reset the timer</p>
+<pre><code>Form fields:
+    start_timer         a submit field when user click Start timer
+    stop_timer          a submit field when user click Stop timer
+    reset_timer         a submit field when user click Reset timer
+</code></pre>
+<h3 id="changetimerform">ChangeTimerForm</h3>
+<p>this form class will control the toggle between break timer and task timer</p>
+<pre><code>Form fields:
+    task_timer           a submit field when user click Task timer
+    break_timer          a submit field when user click Break timer
+</code></pre>
+<h3 id="addtaskform">AddTaskForm</h3>
+<p>this form class will control the add task form</p>
+<pre><code>Form fields:
+    title (str)         a string field indicate title of task
+    note (str)          a string field indicates note of task
+    add_task            a submit field triggered when user hit Add task
+    cancel              a submit field triggered when user hit Cancel
+</code></pre>
+<h3 id="changetotaskaddform">ChangeToTaskAddForm</h3>
+<p>this form class will toggle the add task form </p>
+<pre><code>Form fields:
+    submit              a submit field triggered when user click Add new task
+</code></pre>
+<h3 id="edittaskform">EditTaskForm</h3>
+<p>this form class will control the edit task form, will be toggled when user click Edit</p>
+<pre><code>Form fields:
+    confirm             a submit field triggered when user click Confirm change
+    cancel              a submit field triggered when user click Cancel
+    title (str)         a string field indicates Task title
+    note (str)          a string field indicates Task 's note
+</code></pre>
+<h3 id="signupform">SignUpForm</h3>
+<p>this form class will control the sign up form</p>
+<pre><code>Form fields:
+    username (str)      a string field indicate username
+    password (str)      a string field indicate password
+    email (str)         a string field indicate email     
+    submit              a submit field triggered when user click Add me
+    login              a submit field triggered when user click Take me back
+</code></pre>
+<h3 id="timersettingform">TimerSettingForm</h3>
+<p>this form class will control the timer customize or setting form</p>
+<pre><code>Form fields:
+    task_time (int)     an integer field indicate task time amount
+    break_time (int)    an integer field indicate break time amount
+    auto_break (bool)   an boolean field to tell if user want to auto start the break time when the timer finished
+    confirm             a submit field triggered when user click Confirm change
+    cancel              a submit field triggered when user click Cancel
+</code></pre>
+<h3 id="addflashcardform">AddFlashcardForm</h3>
+<p>this form class will control the add flashcard form</p>
+<pre><code>Form fields:
+    title (str)         a string field indicate title of flashcard
+    descrition (str)    a string field indicates description of flashcard
+    add                 a submit field triggered when user hit Add
+    cancel              a submit field triggered when user hit Cancel
+</code></pre>
+<h3 id="shareflashcardform">ShareFlashcardForm</h3>
+<p>this form class will control the share flashcard form</p>
+<pre><code>Form fields:
+    username (str)      a string field indicate destination username to the flashcard with
+    submit              a submit field triggered when user hit Share
+</code></pre>
+<h3 id="flashcardtopdf">FlashcardToPDF</h3>
+<p>this form class will control the flashcard to PDF form</p>
+<pre><code>Form fields:
+    submit              a submit field triggered when user hit Output flashcards to PDF file
+</code></pre>
+<h3 id="controlsbetweenflashcardinviewform">ControlsBetweenFlashcardInViewForm</h3>
+<p>this form class will control the next and previous button the flashcard route</p>
+<pre><code>Form fields:
+    prev              a submit field triggered when user hit Previous
+    next              a submit field triggered when user hit Next
+</code></pre>
+<h3 id="rendermarkdownfiletoflashcardform">RenderMarkdownfileToFlashCardForm</h3>
+<p>this form class will control the form that take a fil</p>
+<pre><code>Form fields:
+    filename(str)   a string field for filename of the markdown file to be converted to flashcards
+    submit          a submit field trigger when user click convert markdown to flashcards
+</code></pre>
+<h3 id="addnoteform">AddNoteForm</h3>
+<p>This class will allow the user to add a new note</p>
+<pre><code>Form fields:
+    title (str)         a string indicate of title
+    password (str)      a string field indicate password
+    body (str)          a string field indicate body of text
+    submit              a submit field when user click Create
+</code></pre>
+<h3 id="lockednoteform">lockedNoteForm</h3>
+<p>This class will control the lock of the note</p>
+<pre><code>    Form fields:
+        pword(str)          a string indicate password of the note
+        submit              a submit field when use click "Submit"
+</code></pre>
+<h3 id="filternotesform">filterNotesForm</h3>
+<p>This class will allow the user to filter their list of notes</p>
+<pre><code>Form fields:
+    filter (str)        a string indicate of desired filter
+    submit              a submit field when user click Search
+</code></pre>
+<h3 id="functions_4"><strong>Functions</strong></h3>
+<hr>
+
+<h3 id="log">log</h3>
+<p>to notify the user that they logged in</p>
+<pre><code>Returns:
+    a string message to inform user their logged in status
+</code></pre>
+<h3 id="logout">logout</h3>
+<p>will log out the current user and redirect back to the login page</p>
+<pre><code>Returns:
+    redirecting back to the page
+</code></pre>
+<h3 id="login">login</h3>
+<p>returns the sign in page when navigating to /login and controls the log in form, 
+The log in page will be initially displayed when user starts the app </p>
+<pre><code>Returns:
+        redirecting back to the page
+    or
+        a html corresponding to the login page that holds form for user to sign in
+</code></pre>
+<h3 id="signup">signup</h3>
+<p>returns the sign up user page when navigating to /signup and controls the sign up form </p>
+<pre><code>Returns:
+        redirecting back to the page
+    or
+        a html corresponding to the sign up page that holds form for user to register new user
+</code></pre>
+<h3 id="signedup">signedup</h3>
+<p>returns the signedup.html to notify user successful sign up and give them option to sign in later</p>
+<pre><code>Returns:
+    a html to notify that user succesfully signed up
+</code></pre>
+<h3 id="notes_1">notes</h3>
+<p>This function will:</p>
+<ol>
+<li>add new notes for the user</li>
+<li>allow user to view all of their notes</li>
+<li>allow user to search for notes by keywords</li>
+</ol>
+<p>This function render notes html portion of the app when user navigate to /notes route or click notes l&gt;</p>
+<pre><code>Parameters:
+    global filtered(bool)                   a flag telling if the user has prompted for a filtered list of the notes
+    global filterList(List&lt;Notes&gt;)  a global notes list used to store a list of filtered notes
+Returns:
+        redirecting to itself
+    or
+        a template notes.html of the page corresponding to the route /notes
+</code></pre>
+<h3 id="getnote">getNote</h3>
+<p>This function will render open_note.html and pass the desired note into it. The end result is that it will display a note</p>
+<pre><code>Parameters:
+    noteid (int)        integer indicate id of a note
+    global locked       a global boolean flag indicate if the note is locked or not
+
+Returns:
+    a template open_note, displaying the desired note
+</code></pre>
+<h3 id="timer_1">timer</h3>
+<p>This function will</p>
+<ol>
+<li>Control forms: the timer form, add task form, change timer form, edit taskform, and timer </li>
+<li>Set up the timer accordingly to task timer or break timer based on the global variables</li>
+</ol>
+<p>Besides, it will render the timer html portion of the app when user navigate to /timer route or click timer link in the navigation bar at the top</p>
+<pre><code>Parameters:
+    global adding (bool)        a flag to tell if adding form is toggled on
+    global autoBreak (bool)     a boolean that keep track of user's auto entering break timer setting when finished the timer
+    global timerSetting (bool)  a flag to tell if customize timer setting form is on         
+    global editing (bool)       a flag to tell if the editing form of a particular task is on when user click edit button under neath the task
+    global editTaskID (int)     an integer to keep track the current task to be edit, only one task can be edit at a time
+    global timerRemain (int)    an integer used to display the timer numbers in the template, javascript will read this in the data-time attribute, then display the format properly
+    global timerType (str)      a string indicates which type of timer is chosen from the change timer form
+    global timerMessage (str)   a string stored message regarding the timer
+
+Returns:
+        redirecting to itself
+    or
+        a template timer.html of the page corresponding to the route /timer
+</code></pre>
+<h3 id="edit_task">edit_task</h3>
+<p>function trigger when user click edit a task, will toggle edit form underneath the task based on its id when user click Edit</p>
+<pre><code>Parameters:
+    taskid (int):      a task id
+    editing (boolean): a global variable to indicate if edit form is toggled on
+    editTaskID (int):  a global varialbe to keep track the current task to be edited so proper form can be displayed according to task id
+
+Returns:
+    redirecting route back to the /timer
+</code></pre>
+<h3 id="delete_task">delete_task</h3>
+<p>function trigger when user click delete task, will delete a task using its id </p>
+<pre><code>Parameters:
+    taskid (int): a task id
+
+Returns:
+    redirecting route back to the /timer
+</code></pre>
+<h3 id="finish_task">finish_task</h3>
+<p>function trigger when user click finish task, will mark a particular task finished using its id in the user tasks
+also mark the finished date</p>
+<pre><code>Parameters:
+    taskid (int): a task id
+
+Returns:
+    redirecting route back to the /timer
+</code></pre>
+<h3 id="timer_setting">timer_setting</h3>
+<p>function trigger when user click "Customize timer", set the global
+variable timerSetting to true to toggle on the timer setting form</p>
+<pre><code>Parameters:
+    timerSetting (boolean) a global variable keep track if the setting form for timer is on
+
+Returns:
+    redirecting route back to the /timer route
+</code></pre>
+<h3 id="home">home</h3>
+<p>renders the home page of the app after the user logged in or sends the user to login page when they did not sign in</p>
+<pre><code>Returns:
+        html to home page if user logged in
+    Or
+        html to login page otherwise
+</code></pre>
+<h3 id="flashcard_1">flashcard</h3>
+<p>This function will:</p>
+<ol>
+<li>add new flashcard for the user</li>
+<li>allow user to share a flash card with another user</li>
+<li>allow user to convert markdown file to flashcards </li>
+<li>allow user to convert flashcards to PDF</li>
+</ol>
+<p>This function render flashcards html portion of the app when user navigate to /flashcard route or click flashcard link in the navigation bar at the top</p>
+<pre><code>Parameters:
+    global sharing(bool)                    a flag telling if the user opened the sharing flashcard form
+    global flashcardsList(List&lt;Flashcard&gt;)  a global flashcards list used for the entire app
+    global currentCard(Flashcard)           a global Flashcard storing the current flashcard so that app can move between the cards in the list with next and previous buttons
+    global currentCardInView(Flashcard)     a global Flashcard storing the current flashcard used in the flashcards_from_md route
+Returns:
+        redirecting to itself
+    or
+        a template flashcard.html of the page corresponding to the route /flashcard
+    or
+        redirecting to route /flashcards_from_md
+</code></pre>
+<h3 id="share_flashcard">share_flashcard</h3>
+<p>function trigger when user click sharing a flashcard, will toggle sharing form underneath the corresponding flashcard based on its id when user click Share this flashcard</p>
+<pre><code>Parameters:
+    flashcardid (int):      a flashcard id integer
+    sharing (boolean):      a global variable to indicate if edit form is toggled on
+    sharingID (int):        a global varialbe to keep track the current flashcard to be shared so proper form can be displayed according to task id
+
+Returns:
+    redirecting route back to the /flashcard
+</code></pre>
+<h3 id="next_flashc">next_flashc</h3>
+<p>This function will move to the next flashcard in the list when user click "Next"</p>
+<pre><code>Parameters:
+    global flashcardsList(List&lt;Flashcard&gt;)  a global flashcards list used for the entire app
+    global currentCard(Flashcard)           a global Flashcard storing the current flashcard so that app can move between the cards in the list with next and previous buttons
+
+Returns:
+    redirecting to /flashcard route
+</code></pre>
+<h3 id="prev_flashc">prev_flashc</h3>
+<p>This function will move to the previous flashcard in the list when user click "Previous"</p>
+<pre><code>Parameters:
+    global flashcardsList(List&lt;Flashcard&gt;)  a global flashcards list used for the entire app
+    global currentCard(Flashcard)           a global Flashcard storing the current flashcard so that app can move between the cards in the list with next and previous buttons
+
+Returns:
+    redirecting to /flashcard route
+</code></pre>
+<h3 id="hide_flash">hide_flash</h3>
+<p>This function will hide the description of the card when user click "Reveal description"</p>
+<pre><code>Parameters:
+    global revealedCard(bool)       a global boolean variable indicate if the card's description is revealed or not
+
+Returns:
+    redirecting to /flashcard route
+</code></pre>
+<h3 id="reveal_flash">reveal_flash</h3>
+<p>This function will reveal the description of the card when user click "Reveal description"</p>
+<pre><code>Parameters:
+    global revealedCard(bool)       a global boolean variable indicate if the card's description is revealed or not
+
+Returns:
+    redirecting to /flashcard route
+</code></pre>
+<h3 id="flash_md">flash_md</h3>
+<p>This function will return the flashcards_from_md.html when get to route /flashcards_from_md after use hit "Convert markdown to flashcards" </p>
+<p>It will read from the markdown files then convert them to flashcards, and control forms to move between the flashcards</p>
+<pre><code>Parameters:
+    global currentCardInView(Flashcard)     a global Flashcard storing the current flashcard used in the flashcards_from_md route
+    filename(str)                           a string of filename passed via the link in flashcard route
+
+Returns:
+    redirecting back to the current route
+</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
