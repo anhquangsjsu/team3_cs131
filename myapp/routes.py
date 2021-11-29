@@ -1,5 +1,4 @@
 from myapp import myapp_obj
-import pdfkit
 from myapp.forms import lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import send_from_directory, request, render_template, flash, redirect
 from datetime import date
@@ -246,6 +245,8 @@ def notes():
     #more code about notes are put here, this section is for Jason
     global filterList
     global filtered
+    global locked
+    locked = True
     nots = []
     addnoteform = AddNoteForm()
     filterform = filterNotesForm()
@@ -270,7 +271,9 @@ def notes():
     if addnoteform.validate_on_submit():
         if addnoteform.submit.data:
             if addnoteform.title.data != "":
-                n = Notes(user_id = u.id, title = addnoteform.title.data, body = addnoteform.body.data, password = addnoteform.password.data)
+                n = Notes(user_id = u.id, title = addnoteform.title.data, body = addnoteform.body.data)
+                if addnoteform.password.data != None:
+                    n.set_password(addnoteform.password.data)
                 db.session.add(n)
                 db.session.commit()
                 flash(f'The note {addnoteform.title.data} has been added')

@@ -9,7 +9,17 @@
         <p>{{form.submit()}}</p>
     </form>
 {% endif %}
-
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for m in messages %}
+            <li>{{ m }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+</body>
 {% if show == False %}
     <h1>
         {% if aNote %}
