@@ -31,9 +31,14 @@
             {{aNote.body}}
         {% endif %}
     </p>
+    <form method = "Post" novalidate>
+            {{form2.hidden_tag()}}
+            <p>{{form2.submit()}}</p>
+    </form>
+    <form method = "Post" novalidate>
+            {{form3.hidden_tag()}}
+            <p>{{form3.username.label}} <br> {{form3.username(size=32)}}</p>
+            <p>{{form3.share()}}</p>
+    </form>
 {% endif %}
-<form method = "Post" novalidate>
-        {{form2.hidden_tag()}}
-        <p>{{form2.submit()}}</p>
-</form>
 {% endblock %}

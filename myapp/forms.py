@@ -144,6 +144,16 @@ class ShareFlashcardForm(FlaskForm):
     submit = SubmitField ('Share')
     cancel = SubmitField('Cancel')
 
+class ShareNoteForm(FlaskForm):
+    '''
+    this form class will control the share note form
+
+        Form fields:
+            username (str)      a string field indicate destination username to the note with
+            submit              a submit field triggered when user hit Share
+    '''
+    username = StringField('Enter username to share to', validators=[DataRequired()])
+    share = SubmitField ('Share')
 class AddNoteForm(FlaskForm):
     '''
     This class will allow the user to add a new note
