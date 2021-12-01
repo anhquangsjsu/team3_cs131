@@ -1,6 +1,6 @@
 from myapp import myapp_obj
 import pdfkit
-from myapp.forms import lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import NoteToPDF, lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
 from flask import send_from_directory, request, render_template, flash, redirect
 from datetime import date
 import time
@@ -302,6 +302,16 @@ def getNote(noteid):
     if n.password == None:
         locked = False
     form1 = lockedNoteForm()
+    note_flash_form = NoteToPDF()
+    if note_flash_form.validate_on_submit() and note_flash_form.submit.data:
+        workingdir = os.path.abspath(os.getcwd())
+        filepath = workingdir
+        u = User.query.filter_by(username = current_user.username).first()
+        html = '<h1>' + u.username + '\'s Note </h1>'
+        html += '<h3>' + n.title + '</h3>'
+        html += '<p>' + n.body + '</p>'
+        pdfkit.from_string(html, 'myNote.pdf')
+        return send_from_directory(filepath, 'myNote.pdf')
     if form1.validate_on_submit():
             if n.check_password(form1.pword.data) == True:
                 locked = False
@@ -309,7 +319,7 @@ def getNote(noteid):
             else:
                 flash("wrong password")
                 redirect('/open_note/{{n.id}}')
-    return render_template("open_note.html", aNote = n, form = form1, show = locked)
+    return render_template("open_note.html", aNote = n, form = form1, form2 = note_flash_form, show = locked)
 
     
 

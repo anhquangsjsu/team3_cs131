@@ -180,6 +180,14 @@ class filterNotesForm(FlaskForm):
     '''
     filter = StringField('Search by', validators = [DataRequired()])
     submit = SubmitField('Search')
+class NoteToPDF(FlaskForm):
+    '''
+    this form class will control the note to PDF form
+
+        Form fields:
+            submit              a submit field triggered when user hit Output note to PDF file
+    '''
+    submit = SubmitField("Output note to PDF file")
 
 class FlashcardToPDF(FlaskForm):
     '''

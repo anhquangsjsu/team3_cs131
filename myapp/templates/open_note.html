@@ -32,4 +32,8 @@
         {% endif %}
     </p>
 {% endif %}
+<form method = "Post" novalidate>
+        {{form2.hidden_tag()}}
+        <p>{{form2.submit()}}</p>
+</form>
 {% endblock %}
