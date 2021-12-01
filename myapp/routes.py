@@ -273,7 +273,8 @@ def notes():
         if addnoteform.submit.data:
             if addnoteform.title.data != "":
                 n = Notes(user_id = u.id, title = addnoteform.title.data, body = addnoteform.body.data)
-                if addnoteform.password.data != None:
+                print(addnoteform.password.data)
+                if addnoteform.password.data != "":
                     n.set_password(addnoteform.password.data)
                 db.session.add(n)
                 db.session.commit()
@@ -298,6 +299,8 @@ def getNote(noteid):
     """
     global locked
     n = Notes.query.filter_by(id = noteid).first()
+    if n.password == None:
+        locked = False
     form1 = lockedNoteForm()
     if form1.validate_on_submit():
             if n.check_password(form1.pword.data) == True:
