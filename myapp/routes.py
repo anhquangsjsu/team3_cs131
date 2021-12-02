@@ -346,7 +346,7 @@ def flashcard():
     if u != None:
         flashcards = u.flashcards.all()
         flashcardsList = flashcards
-        if currentCard == None:
+        if currentCard == None and len(flashcardsList) > 0:
             currentCard = flashcardsList[-1]
     #add flashcard features
     if form.validate_on_submit():
