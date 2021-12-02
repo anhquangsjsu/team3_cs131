@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unforgettable</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unforgettable</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-<div class="jumbotron text-center">
-  <h1>Unforgettable</h1>
-  <p>A great and simple way to study</p>
-  <form method="POST" novalidate>
-    {{ form.hidden_tag() }}
-    <p>{{ form.submit }}</p>
-  </form> 
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <h3 style="text-align: center;">Notes</h3>
-      <p>Write and save notes, lock your notes with password to protect important information.</p>
-      <p>Search for specific notes so you'll never lose track of your notes.</p>
-      <p>Export notes to PDF so you'll have them anywhere, anytime.</p>
+<body style="background-color: aqua;">
+    <div class="jumbotron text-center", style="background-color: aqua;">
+        <h1>Unforgettable</h1>
+        <p>A great and simple way to study</p>
+        <form method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <p>{{ form.submit }}</p>
+        </form> 
     </div>
-    <div class="col-sm-4">
-      <h3 style="text-align: center;">Flashcards</h3>
-      <p>User can convert markdown to flashcards to study</p>
-      <p>User can also share with others</p>
-      <p>They can also output the flashcard as PDF file to save for later</p>
+    <div class="container", style="background-color: aquamarine;">
+        <div class="row">
+            <div class="col-sm-4">
+                <h3 style="text-align: center;">Notes</h3>
+                <p>Write and save notes, lock your notes with password to protect important information.</p>
+                <p>Search for specific notes so you'll never lose track of your notes.</p>
+                <p>Export notes to PDF so you'll have them anywhere, anytime.</p>
+            </div>
+            <div class="col-sm-4">
+                <h3 style="text-align: center;">Flashcards</h3>
+                <p>User can convert markdown to flashcards to study</p>
+                <p>User can also share with others</p>
+                <p>They can also output the flashcard as PDF file to save for later</p>
+            </div>
+            <div class="col-sm-4">
+                <h3 style="text-align: center;">Pomodoro timer</h3>        
+                <p>Study and break timer for better work flow.</p>
+                <p>Create task and add it to a list so you stay focus on what needs to be done.</p>
+            </div>
+        </div>
     </div>
-    <div class="col-sm-4">
-      <h3 style="text-align: center;">Pomodoro timer</h3>        
-      <p>Study and break timer for better work flow.</p>
-      <p>Create task and add it to a list so you stay focus on what needs to be done.</p>
+    <div class="container", style="background-color: aquamarine;">
+        <div class="row">
+            <div class="thumbnail, col-sm-4">
+                <img src="./static/test1.jpeg" style="width:100%">
+            </div>
+            <div class="thumbnail, col-sm-4">
+                <img src="./static/test2.jpeg" style="width:100%"></a>
+            </div>
+            <div class="thumbnail, col-sm-4">
+                <img src="./static/test3.jpeg" style="width:100%"></a>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-
 </body>
 </html>
