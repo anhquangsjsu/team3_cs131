@@ -1,0 +1,12 @@
+body{
+    padding: 20px
+}
+form label{
+    width: 100px;
+}
+.user-info{
+    color: lightskyblue !important;
+}
+a{
+    font-size: 2em !important;
+}

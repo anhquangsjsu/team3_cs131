@@ -5,21 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unforgettable App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/litera/bootstrap.min.css"></script>
+    <link rel="stylesheet" href="./static/css/base.css"/>
 </head>
 <body>
     <div>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/notes">Notes</a>
-            <a href="/flashcard">Flash card</a>
-            <a href="/timer">Todotimer</a>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Unfogettable</a>
+            </div>    
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/notes">Notes</a></li>
+                <li><a href="/flashcard">Flash card</a></li>
+                <li><a href="/timer">Podoromo timer</a></li>
+            </ul>
+            {% if username %}
+            <div class="user-panel">
+                <b>Hello {{username}}</b>
+                <a href="/logout">Logout</a>
+            </div>
+            {% endif %}    
+            </div>
+            
         </nav>
-        {% if username %}
-        <div>
-            <b>Hello {{username}}</b>
-            <a href="/logout">Logout</a>
-        </div>
-        {% endif %}
     </div>
     {% block content %}
     {% endblock %}

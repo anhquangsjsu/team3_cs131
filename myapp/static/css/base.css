@@ -1,0 +1,37 @@
+.navbar{
+    background:#1F75FE;
+}
+.navbar a{
+     color: white!important;
+}
+.navbar .user-panel{
+    background: white;
+    float: right;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.user-panel a{
+    padding: 0 10px;
+    color: #1F75FE!important;
+}
+
+.list-group.main-features{
+    width: 60%;
+    margin: auto;
+    font-size: 1.5em;
+    margin-top: 50px;
+}
+.feature-item{
+    color: #1F75FE;
+}
+.banner{
+    background: url('../connected.jpeg') no-repeat fixed;
+    background-size: cover;
+    height: 200px;
+    padding-top: 50px;
+}
+.banner h1{
+    color: white;
+    font-size: 3em;
+}

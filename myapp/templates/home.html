@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Welcome to Unforgettable</h1>
-<p>There are 3 main features in the app:</p>
-<ul>
-    <li>a notes list to memorize</li>
-    <li>a flash cards system to study</li>
-    <li>a todotimer to work and study under a certain time limit</li>
+<div class="banner">
+    <h1 class="text-center">Welcome to Unforgettable</h1>
+</div>
+<ul class="list-group main-features">
+    <p>There are 3 main features in the app:</p>
+    <li class="list-group-item">a <span class="feature-item">Notes</span> list to memorize</li>
+    <li class="list-group-item">a <span class="feature-item">Flashcards</span> system to study</li>
+    <li class="list-group-item">a <span class="feature-item">Podoromo timer</span> to work and study under a certain time limit</li>
 </ul>
 {% endblock %}
