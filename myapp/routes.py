@@ -1,6 +1,6 @@
 from myapp import myapp_obj
 import pdfkit
-from myapp.forms import ShareNoteForm, NoteToPDF, lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import ShareNoteForm, NoteToPDF, lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm, SplashForm
 from flask import send_from_directory, request, render_template, flash, redirect
 from datetime import date
 import time
@@ -674,7 +674,7 @@ def home():
     if current_user.is_authenticated:
         return render_template('home.html', username = current_user.username)
     else: 
-        return redirect('/login')
+        return redirect('/splash')
 
 @myapp_obj.route("/share_flashcard/<string:flashcardid>")
 def share_flashcard(flashcardid):
@@ -842,4 +842,9 @@ def flash_md(filename):
         currentCardInView = flashcards[i]
     return render_template("flashcards_from_md.html",card = currentCardInView, form = form)
 
-
+@myapp_obj.route("/splash", methods=['POST', 'GET'])
+def splash():
+    form = SplashForm()
+    if form.validate_on_submit():
+        return redirect('/login')
+    return render_template('splash.html', form = form)

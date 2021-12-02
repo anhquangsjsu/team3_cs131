@@ -230,3 +230,6 @@ class RenderMarkdownfileToFlashCardForm(FlaskForm):
     '''
     filename = StringField('Please enter a markdown file name (for example: file.md): ', validators = [DataRequired()])
     submit = SubmitField('Convert markdown to flashcards')
+
+class SplashForm(FlaskForm):
+    submit = SubmitField("Let's get started")
