@@ -144,6 +144,16 @@ class ShareFlashcardForm(FlaskForm):
     submit = SubmitField ('Share')
     cancel = SubmitField('Cancel')
 
+class ShareNoteForm(FlaskForm):
+    '''
+    this form class will control the share note form
+
+        Form fields:
+            username (str)      a string field indicate destination username to the note with
+            submit              a submit field triggered when user hit Share
+    '''
+    username = StringField('Enter username to share to', validators=[DataRequired()])
+    share = SubmitField ('Share')
 class AddNoteForm(FlaskForm):
     '''
     This class will allow the user to add a new note
@@ -180,6 +190,14 @@ class filterNotesForm(FlaskForm):
     '''
     filter = StringField('Search by', validators = [DataRequired()])
     submit = SubmitField('Search')
+class NoteToPDF(FlaskForm):
+    '''
+    this form class will control the note to PDF form
+
+        Form fields:
+            submit              a submit field triggered when user hit Output note to PDF file
+    '''
+    submit = SubmitField("Output note to PDF file")
 
 class FlashcardToPDF(FlaskForm):
     '''
@@ -212,3 +230,6 @@ class RenderMarkdownfileToFlashCardForm(FlaskForm):
     '''
     filename = StringField('Please enter a markdown file name (for example: file.md): ', validators = [DataRequired()])
     submit = SubmitField('Convert markdown to flashcards')
+
+class SplashForm(FlaskForm):
+    submit = SubmitField("Let's get started")

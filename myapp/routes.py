@@ -1,6 +1,6 @@
 from myapp import myapp_obj
 import pdfkit
-from myapp.forms import lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm
+from myapp.forms import ShareNoteForm, NoteToPDF, lockedNoteForm, RenderMarkdownfileToFlashCardForm,ControlsBetweenFlashcardInViewForm, FlashcardToPDF,ShareFlashcardForm, AddNoteForm, filterNotesForm, TimerSettingForm,AddFlashcardForm, EditTaskForm, ChangeTimerForm, LoginForm, TimerForm, AddTaskForm, ChangeToTaskAddForm, SignUpForm, SplashForm
 from flask import send_from_directory, request, render_template, flash, redirect
 from datetime import date
 import time
@@ -272,8 +272,10 @@ def notes():
     if addnoteform.validate_on_submit():
         if addnoteform.submit.data:
             if addnoteform.title.data != "":
-                n = Notes(user_id = u.id, title = addnoteform.title.data, body = addnoteform.body.data)
-                if addnoteform.password.data != None:
+                n = Notes(title = addnoteform.title.data, body = addnoteform.body.data)
+                u.notes.append(n)
+                print(addnoteform.password.data)
+                if addnoteform.password.data != "":
                     n.set_password(addnoteform.password.data)
                 db.session.add(n)
                 db.session.commit()
@@ -298,7 +300,31 @@ def getNote(noteid):
     """
     global locked
     n = Notes.query.filter_by(id = noteid).first()
+    if n.password == None:
+        locked = False
     form1 = lockedNoteForm()
+    note_flash_form = NoteToPDF()
+    share_note_form = ShareNoteForm()
+    if share_note_form.validate_on_submit():
+        #share is clicked
+        if share_note_form.share.data:
+            p = User.query.filter_by(username = share_note_form.username.data).first()
+            if p != None:
+                if share_note_form.username.data != '':
+                    newN = Notes(title = n.title, body = n.body)
+                    p.notes.append(newN)
+                    db.session.add(newN)
+                    db.session.commit()
+        redirect ('/open_note/{{n.id}}')
+    if note_flash_form.validate_on_submit() and note_flash_form.submit.data:
+        workingdir = os.path.abspath(os.getcwd())
+        filepath = workingdir
+        u = User.query.filter_by(username = current_user.username).first()
+        html = '<h1>' + u.username + '\'s Note </h1>'
+        html += '<h3>' + n.title + '</h3>'
+        html += '<p>' + n.body + '</p>'
+        pdfkit.from_string(html, 'myNote.pdf')
+        return send_from_directory(filepath, 'myNote.pdf')
     if form1.validate_on_submit():
             if n.check_password(form1.pword.data) == True:
                 locked = False
@@ -306,9 +332,7 @@ def getNote(noteid):
             else:
                 flash("wrong password")
                 redirect('/open_note/{{n.id}}')
-    return render_template("open_note.html", aNote = n, form = form1, show = locked)
-
-    
+    return render_template("open_note.html", aNote = n, form = form1, form2 = note_flash_form, show = locked, form3 = share_note_form)
 
 #Flashcards features
 @myapp_obj.route("/flashcard", methods=["GET", "POST"])
@@ -650,7 +674,7 @@ def home():
     if current_user.is_authenticated:
         return render_template('home.html', username = current_user.username)
     else: 
-        return redirect('/login')
+        return redirect('/splash')
 
 @myapp_obj.route("/share_flashcard/<string:flashcardid>")
 def share_flashcard(flashcardid):
@@ -818,4 +842,9 @@ def flash_md(filename):
         currentCardInView = flashcards[i]
     return render_template("flashcards_from_md.html",card = currentCardInView, form = form)
 
-
+@myapp_obj.route("/splash", methods=['POST', 'GET'])
+def splash():
+    form = SplashForm()
+    if form.validate_on_submit():
+        return redirect('/login')
+    return render_template('splash.html', form = form)
