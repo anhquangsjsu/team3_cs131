@@ -1,64 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>My Flashcards</h2>
-<div>
-    {%if currentCard %}
-    <div class = "single_flashcard">
-        <div class="card">
-            <h4>{{currentCard.title}}</h4>
-            {% if revealedCard %}
-            <p>{{currentCard.description}}</p>
-            {% endif %}
-        </div>
-        <div class="flash_card_control">
-            <a href="/prev_flashc">Previous</a>
-            {% if not revealedCard %}
-            <a href="/reveal_flash">Reveal Description</a>
-            {% else %}
-            <a href="/hide_flash">Hide Description</a>
-            {% endif %}
-            <a href="/next_flashc">Next</a>
-        </div>
-    </div>
-    {% endif  %}
-    <h3>Flashcards list</h3>
-    {% if flashcards %}
-    {% for f in flashcards %}
-    <div> <h4>{{ f.title}}</h4> <p>{{f.description}}</p></div>
-        {% if sharing and sharingID == f.id %}
-        <form method="POST" novalidate>
-            {{share_flashcard_form.hidden_tag()}}
-            <p>{{share_flashcard_form.username.label}}{{share_flashcard_form.username()}}</p>
-            <p>{{share_flashcard_form.submit}} {{share_flashcard_form.cancel()}}</p>
-        </form>
-        {% else  %}
-            <a href="/share_flashcard/{{f.id}}">Share this flash card</a>
-        {% endif %}
-    {% endfor %} 
-    {% else %}
-    <p> No flashcard </p>
-    {% endif %}
+<div class="banner flash">
+    <h1>My Flashcards</h1>
 </div>
- {% with messages = get_flashed_messages() %}
- {% if messages %}
- <div>
-    {% for m in messages %}
-    <p>{{ m }}</p>
-    {% endfor %}
- </div>
- {% endif %}
- {% endwith %}
- <h3>Convert flashcards to PDF</h3>
- <form method='POST' novalidate>
-    {{pdf_flash_form.hidden_tag()}}
-    <p>{{pdf_flash_form.submit()}}</p>
- </form>
- <h3>Render markdown files and output flashcards</h3>
- <form method='POST' novalidate>
-    {{md_flash_form.hidden_tag()}}
-    <p>{{md_flash_form.filename.label}} {{md_flash_form.filename()}}</p>
-    <p>{{md_flash_form.submit}}</p>
- </form>
+<div class="container flash">
+    <div class="column left-column">
+        {%if currentCard %}
+        <div class="flashcard-study">
+            <h3>Flashcards study zone</h3>
+            <div class = "single_flashcard">
+                <div class="card bg-light">
+                    <div class="card-header">{{currentCard.title}}</div>
+                    <div class="card-body">
+                    {% if revealedCard %}
+                        {{currentCard.description}}
+                    {% else %}
+                        Hidden content
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="flash_card_control">
+                    <a class="btn btn-success" href="/prev_flashc">Previous</a>
+                    {% if not revealedCard %}
+                    <a class="btn btn-warning" href="/reveal_flash">Reveal Description</a>
+                    {% else %}
+                    <a class="btn btn-primary" href="/hide_flash">Hide Description</a>
+                    {% endif %}
+                    <a class="btn btn-success" href="/next_flashc">Next</a>
+                </div>
+            </div>
+        </div>
+        {% endif  %}
+        <div class="cards-list">
+            <h3>Flashcards list</h3>
+            {% if flashcards %}
+            {% for f in flashcards %}
+            <div class="c-item"> <p>{{ f.title}}</p> <p>{{f.description}}</p>
+                {% if sharing and sharingID == f.id %}
+                <form method="POST" novalidate>
+                    {{share_flashcard_form.hidden_tag()}}
+                    <p>{{share_flashcard_form.username.label}}{{share_flashcard_form.username()}}</p>
+                    <p>{{share_flashcard_form.submit(class_="btn btn-primary")}} {{share_flashcard_form.cancel(class_="btn btn-danger")}}</p>
+                </form>
+                {% else  %}
+                    <a href="/share_flashcard/{{f.id}}">Share this flashcard</a>
+                {% endif %}
+            </div>
+            {% endfor %} 
+            {% else %}
+            <div class="well"> No flashcard, you can add more with the form below</div>
+            {% endif %}
+        </div>
+        
 <div class="add_flashcard_form">
     <h3>Add a flashcard</h3>
     <form method="POST" novalidate>
@@ -68,10 +61,33 @@
 
         <p> {{ form.description.label }} {{ form.description(size=32) }}</p>
 
-        <p> {{form.cancel()}} {{ form.add() }} </p>
+        <p> {{ form.add(class_="btn btn-primary") }} {{form.cancel(class_="btn btn-danger")}} </p>
 
     </form> 
 </div>
-
+    </div>
+    <div class="column right-column">
+        <h3>Convert flashcards to PDF</h3>
+        <form method='POST' novalidate>
+           {{pdf_flash_form.hidden_tag()}}
+           <p>{{pdf_flash_form.submit(class_="btn btn-primary")}}</p>
+        </form>
+        <h3>Render markdown files and output flashcards</h3>
+        <form method='POST' novalidate>
+           {{md_flash_form.hidden_tag()}}
+           <p>{{md_flash_form.filename.label}} {{md_flash_form.filename()}}</p>
+           <p>{{md_flash_form.submit(class_="btn btn-primary")}}</p>
+        </form>
+    </div>
+<!--  {% with messages = get_flashed_messages() %}
+ {% if messages %}
+ <div>
+    {% for m in messages %}
+    <p>{{ m }}</p>
+    {% endfor %}
+ </div>
+ {% endif %}
+ {% endwith %} -->
+</div>
              
 {% endblock %}

@@ -26,12 +26,85 @@
     color: #1F75FE;
 }
 .banner{
-    background: url('../connected.jpeg') no-repeat fixed;
-    background-size: cover;
     height: 200px;
     padding-top: 50px;
+    background-size: cover;
+}
+.banner.home{
+    background: url('../connected.jpeg') no-repeat fixed;
+}
+.banner.flash{
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../flash.png") no-repeat fixed;
 }
 .banner h1{
     color: white;
     font-size: 3em;
+    text-align: center;
+}
+
+.left-column{
+    float: left;
+    width: 60%;
+}
+.right-column{
+    float: right;
+    width: 40%;
+}
+
+.left-column form label{
+    width: 150px;
+}
+
+.column{
+    padding: 10px;
+}
+h2, h3{
+    color: #1F75FE;
+}
+
+input:not([type=submit]), textarea{
+    width: 250px;
+}
+
+.flash .well{
+    width: 400px;
+}
+
+.card{
+    width: 400px;
+    height: 200px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.card .card-header{
+    border-bottom: 1px solid white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    background: #1F75FE;
+    color: white;
+    font-weight: bold;
+}
+
+.card .card-body{
+    padding: 10px;
+    
+}
+
+.c-item{
+    border: 1px solid lightgray;
+    width: 400px;
+}
+.c-item p{
+    padding: 5px;
+}
+.c-item p:first-child{
+    border-bottom: 1px solid white;
+    font-weight: bold;
+    background: #1F75FE;
+    color: white;
+}
+.c-item a{
+    padding: 5px;
 }
