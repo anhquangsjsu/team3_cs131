@@ -1,44 +1,133 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unforgettable App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootswatch@5.1.3/dist/litera/bootstrap.min.css"></script>
+</head>
+    <style>
+        .navbar{
+        background:#1F75FE;
+        }
+        .navbar a{
+        color: white!important;
+        }
+        .navbar .user-panel{
+        background: white;
+        float: right;
+        padding: 5px 10px;
+        margin-top: 10px;
+        border-radius: 10px;
+        }
+        .user-panel a{
+        padding: 0 10px;
+        color: #1F75FE!important;
+        }
+        .locked-note label{
+            font-size: 1.5em;
+        }
+        .locked-note form{
+            border: 1px solid lightgray;
+            width: 70%;
+            margin: auto;
+            padding: 50px;
+            border-radius: 5px;
+        }
+        .note{
+            min-height: 300px;
+            padding: 50px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            background: lightyellow;
+        }
+        .note-title{
+            font-size: 1.5em;
+            border-bottom: 1px solid lightgray;
+            padding-bottom: 10px;
+        }
+        .note-body{
+            padding: 10px 0;
+            font-size: 1.2em;
+        }
+        .pdf-note input.btn-success{
+            margin: auto;
+            margin-top: 20px;
 
-{% block content %}
-{% if show == True %}
-
-    <form method = "Post" novalidate>
-        {{form.hidden_tag()}}
-        <p> {{form.pword.label}} <br> {{form.pword(size = 28)}}</p>
-        <p>{{form.submit()}}</p>
-    </form>
-{% endif %}
+        }
+        .share-note{
+            border-top: 1px solid lightgray;
+            padding-top: 10px;
+        }
+    </style>
 <body>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for m in messages %}
-            <li>{{ m }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+    <div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Unfogettable</a>
+            </div>    
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/notes">Notes</a></li>
+                <li><a href="/flashcard">Flashcards</a></li>
+                <li><a href="/timer">Pomodoro timer</a></li>
+            </ul>
+            {% if username %}
+            <div class="user-panel">
+                <b>Hello {{username}}</b>
+                <a href="/logout">Logout</a>
+            </div>
+            {% endif %}    
+            </div>
+            
+        </nav>
+    </div>
+    <div class="container note-open">
+    {% if show == True %}
+    <div class="container locked-note text-center">
+        <form method = "Post" novalidate>
+            {{form.hidden_tag()}}
+            <p> {{form.pword.label}} <br> {{form.pword(size = 28)}}</p>
+            <p>{{form.submit(class_="btn btn-primary")}}</p>
+        </form>
+    </div>
+    {% endif %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for m in messages %}
+                <li>{{ m }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+    {% if show == False %}
+        <div class="container note">
+            <div class="note-title">
+                {% if aNote %}
+                    {{aNote.title}}
+                {% endif %}
+            </div>
+            <p class="note-body">
+                {% if aNote %}
+                    {{aNote.body}}
+                {% endif %}
+            </p>
+        </div>
+      
+        <form class="pdf-note" method = "Post" novalidate>
+                {{form2.hidden_tag()}}
+                <p>{{form2.submit(class_="btn btn-success text-center")}}</p>
+        </form>
+        <form class="share-note" method = "Post" novalidate>
+                {{form3.hidden_tag()}}
+                <p>{{form3.username.label}} <br> {{form3.username(size=32)}}</p>
+                <p>{{form3.share(class_="btn btn-primary")}}</p>
+        </form>
+    {% endif %}
+</div>
 </body>
-{% if show == False %}
-    <h1>
-        {% if aNote %}
-            {{aNote.title}}
-        {% endif %}
-    </h1>
-    <p>
-        {% if aNote %}
-            {{aNote.body}}
-        {% endif %}
-    </p>
-    <form method = "Post" novalidate>
-            {{form2.hidden_tag()}}
-            <p>{{form2.submit()}}</p>
-    </form>
-    <form method = "Post" novalidate>
-            {{form3.hidden_tag()}}
-            <p>{{form3.username.label}} <br> {{form3.username(size=32)}}</p>
-            <p>{{form3.share()}}</p>
-    </form>
-{% endif %}
-{% endblock %}
+</html>

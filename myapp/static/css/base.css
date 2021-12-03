@@ -36,6 +36,12 @@
 .banner.flash{
     background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../flash.png") no-repeat fixed;
 }
+.banner.note{
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../note.png") no-repeat fixed;
+}
+.banner.pomo{
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../pomodoro.png") no-repeat fixed;
+}
 .banner h1{
     color: white;
     font-size: 3em;
@@ -44,11 +50,11 @@
 
 .left-column{
     float: left;
-    width: 60%;
+    width: 50%;
 }
 .right-column{
     float: right;
-    width: 40%;
+    width: 50%;
 }
 
 .left-column form label{

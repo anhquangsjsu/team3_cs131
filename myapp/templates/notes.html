@@ -1,34 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Your Notes</h1>
-
-<form method = "Post" novalidate>
-    {{form2.hidden_tag()}}
-    <p>{{form2.filter.label}} <br> {{form2.filter(size = 32)}}</p>
-    <p>{{form2.submit()}}
-<form method = "Post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>{{form.title.label}} <br>{{form.title(size = 32)}}</p>
-    <p>{{form.body.label}} <br>{{form.body(size=256)}}</p>
-    <p>{{form.password.label}} <br>{{form.password(size = 32)}}</p>
-    <p>{{form.submit()}}</p>
-</form>
-
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        <div>
-            {% for m in messages %}
-            <p>{{ m }}</p>
+<div class="banner note">
+    <h1>Your Notes</h1>
+</div>
+<div class="container">
+    <div class="left-column">
+        <h3>Filter note list</h3>
+        <form method = "Post" novalidate>
+             {{form2.hidden_tag()}}
+            <p>{{form2.filter.label}} <br> {{form2.filter(size = 32)}}</p>
+        <p>{{form2.submit(class_="btn btn-primary")}}</p>
+        <h3>Notes list</h3>
+        <ul class="list-group">
+            {% for n in all_notes %}
+            <li class="list-group-item"><a href="/open_note/{{n.id}}">{{n.title}}</a> </li>
             {% endfor %}
-        </div>
-    {% endif %}
- {% endwith %}
-<body>
-    <ul>
-        {% for n in all_notes %}
-        <li><a href="/open_note/{{n.id}}">{{n.title}}</a> </li>
-        {% endfor %}
-    </ul>
-</body>
+        </ul>
+    </div>
+
+    <div class="add-note-form column right-column">
+        <h3>Add a new note</h3>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div>
+                {% for m in messages %}
+                <p class="text-success">{{ m }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <form method = "Post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>{{form.title.label}} <br>{{form.title(size = 32)}}</p>
+            <p>{{form.body.label}} <br>{{form.body(size=256)}}</p>
+            <p>{{form.password.label}} <br>{{form.password(size = 32)}}</p>
+            <p>{{form.submit(class_="btn btn-success")}}</p>
+        </form>
+    </div>
+</div>
+
 
 {% endblock %}
