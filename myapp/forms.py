@@ -178,7 +178,7 @@ class lockedNoteForm(FlaskForm):
             submit              a submit field when use click "Submit"
     '''
     pword = StringField('Enter password for the note', validators=[DataRequired()])
-    submit = SubmitField("Submit")
+    check = SubmitField("Submit")
 
 class filterNotesForm(FlaskForm):
     '''

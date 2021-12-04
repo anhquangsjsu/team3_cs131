@@ -325,7 +325,7 @@ def getNote(noteid):
         html += '<p>' + n.body + '</p>'
         pdfkit.from_string(html, 'myNote.pdf')
         return send_from_directory(filepath, 'myNote.pdf')
-    if form1.validate_on_submit():
+    if form1.validate_on_submit() and form1.check.data:
             if n.check_password(form1.pword.data) == True:
                 locked = False
                 redirect("/open_note/{{n.id}}")
