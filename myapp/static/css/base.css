@@ -25,29 +25,32 @@
 .feature-item{
     color: #1F75FE;
 }
-.banner{
-    height: 200px;
-    padding-top: 50px;
+
+.banner.home{
+    background: url('../connected.jpeg') no-repeat fixed center;
     background-size: cover;
 }
-.banner.home{
-    background: url('../connected.jpeg') no-repeat fixed;
-}
 .banner.flash{
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../flash.png") no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../flash.png") no-repeat fixed center;
+    background-size: cover;
 }
 .banner.note{
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../note.png") no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../note.png") no-repeat fixed center;
+    background-size: cover;
 }
 .banner.pomo{
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../pomodoro.png") no-repeat fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("../pomodoro.png") no-repeat center;
+    background-size: cover;
 }
 .banner h1{
     color: white;
     font-size: 3em;
     text-align: center;
 }
-
+.banner{
+    height: 200px;
+    padding-top: 50px;
+}
 .left-column{
     float: left;
     width: 50%;
@@ -113,4 +116,8 @@ input:not([type=submit]), textarea{
 }
 .c-item a{
     padding: 5px;
+}
+
+img{
+    border: 1px solid black;
 }
