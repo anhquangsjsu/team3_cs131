@@ -29,7 +29,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
-    email = db.Column(db.String(128), unique=True)
+    email = db.Column(db.String(128))
     password  = db.Column(db.String(128))
     task_timer = db.Column(db.Integer)
     break_timer = db.Column(db.Integer)
@@ -84,7 +84,7 @@ class Task(db.Model):
             user_id (int)       id of the user who owned the task
     '''
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(128), unique=True)
+    title = db.Column(db.String(128))
     note = db.Column(db.String(256))
     finished = db.Column(db.Boolean)
     date_started = db.Column(db.Date)

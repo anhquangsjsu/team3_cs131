@@ -7,6 +7,6 @@ form label{
 .user-info{
     color: lightskyblue !important;
 }
-a{
+a:not(.btn){
     font-size: 2em !important;
 }
